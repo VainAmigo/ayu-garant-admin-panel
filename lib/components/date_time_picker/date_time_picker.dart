@@ -16,7 +16,7 @@ class DateRangePickerChip extends StatefulWidget {
     this.firstDate,
     this.lastDate,
     this.borderRadius = 24,
-    this.height = 40,
+    this.height = 34,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
   });
 
@@ -104,6 +104,14 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
     }
   }
 
+  void _resetRange() {
+    setState(() {
+      _start = null;
+      _end = null;
+    });
+    widget.onChanged?.call(null);
+  }
+
   String _format(DateTime? date) => date == null ? '' : _dateFormat.format(date);
 
   @override
@@ -119,16 +127,10 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(widget.borderRadius),
-            border: Border.all(color: AppColors.grey100),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.black.withOpacity(0.04),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            border: Border.all(color: AppColors.grey),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.calendar_today, size: 18, color: AppColors.grey),
@@ -144,6 +146,17 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
                 value: _format(_end),
                 hint: widget.hintEnd,
               ),
+              if (_start != null && _end != null) ...[
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: _resetRange,
+                  child: Icon(
+                    Icons.clear,
+                    size: 20,
+                    color: AppColors.grey,
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -174,6 +187,7 @@ class _ValueOrHint extends StatelessWidget {
       value.isEmpty ? hint : value,
       style: value.isEmpty ? hintStyle : valueStyle,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     );
   }
 }

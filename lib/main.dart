@@ -1,4 +1,4 @@
-import 'package:ayu_admin_panel/home_page.dart';
+import 'package:ayu_admin_panel/moduls/main/view/app_main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,12 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AYU Admin Panel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const AppMain(),
     );
   }
 }
