@@ -6,3 +6,4 @@ export 'date_time_picker/date_time_picker.dart';
 export 'search_bar/custom_search_bar.dart';
 export 'custom_drop_down/custom_drop_down.dart';
 export 'drawer/custom_drawer.dart';
+export 'chart/custom_chart.dart';

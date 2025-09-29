@@ -1,5 +1,6 @@
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/moduls/analytic/view/analytic_view.dart';
+import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ayu_admin_panel/pages/pages.dart';
 
@@ -73,6 +74,7 @@ class _AppMainState extends State<AppMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.grey100,
       appBar: CustomAppBar(
         title: _pageTitles[_selectedIndex],
       ),

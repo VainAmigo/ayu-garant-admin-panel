@@ -25,7 +25,7 @@ class NumberCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: double.infinity,
+        width: 300,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : AppColors.white,
