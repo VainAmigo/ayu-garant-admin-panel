@@ -2,14 +2,14 @@ import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class AnalyticFilter extends StatefulWidget {
-  const AnalyticFilter({super.key});
+class ReportFilterWidget extends StatefulWidget {
+  const ReportFilterWidget({super.key});
 
   @override
-  State<AnalyticFilter> createState() => _AnalyticFilterState();
+  State<ReportFilterWidget> createState() => _ReportFilterWidgetState();
 }
 
-class _AnalyticFilterState extends State<AnalyticFilter> {
+class _ReportFilterWidgetState extends State<ReportFilterWidget> {
   String? selectedStatus;
 
   @override
@@ -32,6 +32,7 @@ class _AnalyticFilterState extends State<AnalyticFilter> {
               print('Выбран период: $period');
             },
           ),
+          const DateRangePickerChip(),
           CustomDropDown<String>(
             value: selectedStatus,
             onChanged: (value) {
@@ -40,7 +41,7 @@ class _AnalyticFilterState extends State<AnalyticFilter> {
               });
             },
           ),
-          const DateRangePickerChip(),
+          const DotTextTag(text: 'Только активные', isSelected: true),
           const Spacer(),
           PrimaryButton(text: 'Сформировть', onPressed: () {}),
         ],

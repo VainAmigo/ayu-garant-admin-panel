@@ -1,8 +1,7 @@
 import 'package:ayu_admin_panel/components/components.dart';
-import 'package:ayu_admin_panel/moduls/analytic/view/analytic_view.dart';
+import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:ayu_admin_panel/pages/pages.dart';
 
 class AppMain extends StatefulWidget {
   const AppMain({super.key});
@@ -16,11 +15,7 @@ class _AppMainState extends State<AppMain> {
 
   final List<Widget> _pages = [
     const AnalyticView(),
-    const ReportsPage(),
-    const UsersPage(),
-    const AccountingPage(),
-    const EmergencyCommissionerPage(),
-    const ProfilePage(),
+    const ReportView(),
   ];
 
   final List<String> _pageTitles = [

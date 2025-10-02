@@ -19,6 +19,7 @@ class DotTextTag extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
       ),
       padding: EdgeInsets.symmetric(horizontal: 10),
+      width: 180,
       height: 34,
       child: Row(
         children: [

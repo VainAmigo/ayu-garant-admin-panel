@@ -1,4 +1,4 @@
-import 'package:ayu_admin_panel/moduls/main/view/app_main.dart';
+import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:flutter/material.dart';
 
 void main() {
