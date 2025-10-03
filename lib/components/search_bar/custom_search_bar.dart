@@ -10,7 +10,7 @@ class CustomSearchBar extends StatefulWidget {
 
   const CustomSearchBar({
     super.key,
-    this.hintText = 'Поиск по номеру телефона',
+    this.hintText = 'Поиск по номеру полиса',
     this.onChanged,
     this.onSubmitted,
     this.controller,

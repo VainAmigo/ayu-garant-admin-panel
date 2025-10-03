@@ -1,5 +1,9 @@
+import 'package:ayu_admin_panel/config/config.dart';
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'themes/app_theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AYU Admin Panel',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
+      initialRoute: AppRouter.main,
+      theme: const AppTheme().themeData,
+      home: MultiBlocProvider(
+        providers: [BlocProvider(create: (context) => MenuCubit())],
+        child: AppMainView(),
       ),
-      home: const AppMain(),
     );
   }
 }
-
