@@ -1,0 +1,1 @@
+export 'entities/analytic_entity.dart';
