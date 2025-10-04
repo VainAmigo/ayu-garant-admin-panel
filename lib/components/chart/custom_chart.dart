@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class ChartSegment {
@@ -19,8 +18,6 @@ class CustomChart extends StatelessWidget {
   final double size;
   final double thickness;
   final double startAngle;
-  final bool isFinance;
-  final String? totalPremium;
 
   const CustomChart({
     super.key,
@@ -28,108 +25,29 @@ class CustomChart extends StatelessWidget {
     this.size = 200,
     this.thickness = 50,
     this.startAngle = -math.pi / 2,
-    this.isFinance = false,
-    this.totalPremium,
   });
 
   @override
   Widget build(BuildContext context) {
     final double total = segments.fold(0, (sum, s) => sum + s.value);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Center(
-          child: SizedBox(
-            width: size,
-            height: size,
-            child: CustomPaint(
-              painter: _DonutChartPainter(
-                segments: segments,
-                total: total == 0 ? 1 : total,
-                thickness: thickness,
-                startAngle: startAngle,
-              ),
-            ),
+    return Center(
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _DonutChartPainter(
+            segments: segments,
+            total: total == 0 ? 1 : total,
+            thickness: thickness,
+            startAngle: startAngle,
           ),
         ),
-        const SizedBox(height: 20),
-        isFinance ? Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              totalPremium ?? '',
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'Общая сумма',
-              style: TextStyle(
-                color: AppColors.grey,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ],
-        ) : SizedBox.shrink(),
-        const SizedBox(height: 20),
-        ...segments.map((s) => _LegendRow(segment: s)),
-      ],
-    );
-  }
-}
-
-class _LegendRow extends StatelessWidget {
-  final ChartSegment segment;
-
-  const _LegendRow({required this.segment});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              color: segment.color,
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              segment.label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Text(
-            _formatValue(segment.value),
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: segment.color,
-            ),
-          ),
-        ],
       ),
     );
   }
-
-  String _formatValue(double v) {
-    if (v == v.roundToDouble()) return v.toInt().toString();
-    return v.toStringAsFixed(1);
-  }
 }
+
 
 class _DonutChartPainter extends CustomPainter {
   final List<ChartSegment> segments;

@@ -1,4 +1,3 @@
-import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/config/config.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +12,14 @@ class AnalyticCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(AppSpacing.defaultPadding),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Responsive(
         mobile: AnalyticCardMobile(number: number, text: text),
-        tablet: AnalyticCardDesktop(number: number, text: text),
+        tablet: AnalyticCardTablet(number: number, text: text),
         desktop: AnalyticCardDesktop(number: number, text: text),
       ),
     );

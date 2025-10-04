@@ -50,7 +50,7 @@ final class AppTheme {
     return NavigationBarThemeData(
       labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
         (Set<WidgetState> states) =>
-            states.contains(WidgetState.selected) ? AppTypography.primary14 : AppTypography.grey14w500,
+            states.contains(WidgetState.selected) ? AppTypography.black20w400 : AppTypography.black20w400,
       ),
     );
   }

@@ -7,4 +7,3 @@ export 'search_bar/custom_search_bar.dart';
 export 'custom_drop_down/custom_drop_down.dart';
 export 'drawer/custom_drawer.dart';
 export 'chart/custom_chart.dart';
-export 'table/table.dart';

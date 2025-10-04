@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenuWidget extends StatelessWidget {
-  const SideMenuWidget({
-    super.key,
-  });
+  const SideMenuWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +12,18 @@ class SideMenuWidget extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(
+        AppSpacing.defaultPadding,
+        AppSpacing.defaultPadding,
+        0,
+        AppSpacing.defaultPadding,
+      ),
       child: Drawer(
         backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: ListView(
           children: [
-            DrawerHeader(
-              child: Image.asset("assets/images/ayu_logo.png"),
-            ),
+            DrawerHeader(child: Image.asset("assets/images/ayu_logo.png")),
             DrawerListTile(
               title: "Analytics",
               svgSrc: "assets/icons/icon_analytics.svg",
@@ -88,10 +87,7 @@ class DrawerListTile extends StatelessWidget {
         colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.dstIn),
         height: 16,
       ),
-      title: Text(
-        title,
-        style: TextStyle(color: AppColors.grey),
-      ),
+      title: Text(title, style: TextStyle(color: AppColors.grey)),
     );
   }
 }

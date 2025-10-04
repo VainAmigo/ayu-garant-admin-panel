@@ -57,7 +57,8 @@ class _DotTagFilterState extends State<DotTagFilter> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: PeriodFilter.values.map((period) {
         return Padding(
           padding: const EdgeInsets.only(right: 8.0),

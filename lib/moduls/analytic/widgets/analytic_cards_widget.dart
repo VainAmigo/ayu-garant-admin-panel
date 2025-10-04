@@ -4,8 +4,8 @@ import 'package:ayu_admin_panel/moduls/analytic/analytic.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class AnlyticCardsRow extends StatelessWidget {
-  const AnlyticCardsRow({super.key, required this.analyticData});
+class AnlyticCardsGrid extends StatelessWidget {
+  const AnlyticCardsGrid({super.key, required this.analyticData});
 
   final List<Map<String, dynamic>> analyticData;
 

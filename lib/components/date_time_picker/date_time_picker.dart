@@ -11,8 +11,8 @@ class DateRangePickerChip extends StatefulWidget {
     this.initialStart,
     this.initialEnd,
     this.onChanged,
-    this.hintStart = 'дата начала',
-    this.hintEnd = 'дата окончания',
+    this.hintStart = 'начало',
+    this.hintEnd = 'окончание',
     this.firstDate,
     this.lastDate,
     this.borderRadius = 24,
@@ -133,27 +133,29 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.calendar_today, size: 18, color: AppColors.grey),
+              Icon(Icons.calendar_today, size: 20, color: AppColors.grey),
               const SizedBox(width: 8),
               _ValueOrHint(
                 value: _format(_start),
                 hint: widget.hintStart,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 5),
               _DotSeparator(color: AppColors.grey100),
-              const SizedBox(width: 12),
+              const SizedBox(width: 5),
               _ValueOrHint(
                 value: _format(_end),
                 hint: widget.hintEnd,
               ),
               if (_start != null && _end != null) ...[
                 const SizedBox(width: 12),
-                GestureDetector(
-                  onTap: _resetRange,
-                  child: Icon(
-                    Icons.clear,
-                    size: 20,
-                    color: AppColors.grey,
+                Center(
+                  child: GestureDetector(
+                    onTap: _resetRange,
+                    child: Icon(
+                      Icons.clear,
+                      size: 20,
+                      color: AppColors.grey,
+                    ),
                   ),
                 ),
               ],
@@ -179,7 +181,7 @@ class _ValueOrHint extends StatelessWidget {
     );
     final TextStyle valueStyle = TextStyle(
       color: AppColors.black,
-      fontSize: 14,
+      fontSize: 12,
       fontWeight: FontWeight.w500,
     );
 

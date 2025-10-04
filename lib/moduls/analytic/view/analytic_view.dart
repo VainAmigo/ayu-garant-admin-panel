@@ -14,11 +14,12 @@ class AnalyticView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.defaultPadding),
           child: Column(
+            spacing: AppSpacing.defaultPadding,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Header(),
-              const SizedBox(height: AppSpacing.defaultPadding),
-
+              if (Responsive.isMobile(context))
+                AnalyticFilter(),
               Row(
                 spacing: 20,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,29 +27,24 @@ class AnalyticView extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Column(
+                      spacing: AppSpacing.defaultPadding,
                       children: [
-                        // AnalyticFilter(),
-                        // const SizedBox(height: AppSpacing.defaultPadding),
-                        AnlyticCardsRow(analyticData: analyticData),
-                        const SizedBox(height: AppSpacing.defaultPadding),
+                        AnlyticCardsGrid(analyticData: analyticData),
+                        
+                        AnalyticSystemStat(analyticData: analyticData),
 
-                        // AnalyticSystemStat(
-                        //   androidPercentage: 10.0,
-                        //   iosPercentage: 90.0,
-                        // ),
-                        // const SizedBox(height: AppSpacing.defaultPadding),
-                        // AnalyticPolicyTypeWidget()
+                        AnalyticChartWidget(analyticData: analyticData),
                       ],
                     ),
                   ),
                   if (!Responsive.isMobile(context))
-                    Expanded(flex: 1, child: AnalyticFinanceChartWidget()),
+                    Expanded(flex: 1, child: AnalyticFilter(),),
                 ],
               ),
             ],
           ),
         ),
-      ),
+      ), 
     );
   }
 }
@@ -60,12 +56,9 @@ final List<Map<String, dynamic>> analyticData = [
       {'type': 'КАСКО', 'count': 120},
       {'type': 'ОСАГО', 'count': 340},
       {'type': 'Здоровье', 'count': 80},
-      {'type': 'Имущество', 'count': 45},
     ],
-    'systems': {
-      'android': 65, // в процентах
-      'ios': 35,     // в процентах
-    },
+    'androidPercentage': 90, // в процентах
+    'iosPercentage': 10,     // в процентах
     'premiumSum': 1250000.0, // сумма премии за всё время
     'usedBonuses': 250000.0, // сумма использованных бонусов
     'accruedPoints': 54000,  // сумма начисленных баллов

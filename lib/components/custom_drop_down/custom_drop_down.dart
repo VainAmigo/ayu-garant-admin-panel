@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../themes/colors/app_colors.dart';
+import 'package:ayu_admin_panel/themes/themes.dart';
 
 class CustomDropDown<T> extends StatefulWidget {
   final String hintText;
@@ -22,7 +22,6 @@ class CustomDropDown<T> extends StatefulWidget {
 }
 
 class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
-  // Статический список элементов страховки
   static const List<DropdownItem<String>> _insuranceItems = [
     DropdownItem(value: 'OSAGO', label: 'ОСАГО'),
     DropdownItem(value: 'CASCO', label: 'КАСКО'),

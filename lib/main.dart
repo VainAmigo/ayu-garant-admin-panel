@@ -1,4 +1,3 @@
-import 'package:ayu_admin_panel/config/config.dart';
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AYU Admin Panel',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRouter.main,
+      // initialRoute: AppRouter.main,
       theme: const AppTheme().themeData,
       home: MultiBlocProvider(
         providers: [BlocProvider(create: (context) => MenuCubit())],
