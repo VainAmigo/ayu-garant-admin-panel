@@ -23,7 +23,7 @@ class Header extends StatelessWidget {
             if (!Responsive.isDesktop(context))
               IconButton(
                 icon: Icon(Icons.menu),
-                onPressed: context.read<MenuCubit>().controlMenu,
+                onPressed: () => context.read<MenuBloc>().add(const MenuOpenCloseEvent()),
               ),
             if (!Responsive.isMobile(context))
               Text(

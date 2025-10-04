@@ -42,14 +42,10 @@ class AnalyticCardMobile extends StatelessWidget {
       children: [
         Text(
           number,
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: AppColors.black,
-          ),
+          style: AppTypography.black32w600,
         ),
         const Spacer(),
-        Text(text, style: TextStyle(fontSize: 16, color: AppColors.grey)),
+        Text(text, style: AppTypography.grey16w500),
       ],
     );
   }
@@ -66,9 +62,9 @@ class AnalyticCardTablet extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(number, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppColors.black),),
+        Text(number, style: AppTypography.black32w600,),
         const Spacer(),
-        Text(text, style: TextStyle(fontSize: 16, color: AppColors.grey),),
+        Text(text, style: AppTypography.grey16w500,),
       ],
     );
   }
@@ -89,9 +85,9 @@ class AnalyticCardDesktop extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(number, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppColors.black),),
+        Text(number, style: AppTypography.black32w600,),
         const Spacer(),
-        Text(text, style: TextStyle(fontSize: 20, color: AppColors.grey),),
+        Text(text, style: AppTypography.grey16w500.copyWith(fontSize: 20),),
       ],
     );
   }

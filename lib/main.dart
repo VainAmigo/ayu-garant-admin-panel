@@ -1,6 +1,5 @@
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'themes/app_theme/app_theme.dart';
 
@@ -18,10 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: AppRouter.main,
       theme: const AppTheme().themeData,
-      home: MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => MenuCubit())],
-        child: AppMainView(),
-      ),
+      home: AppMainView(),
     );
   }
 }
