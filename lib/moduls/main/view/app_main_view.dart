@@ -10,38 +10,35 @@ class AppMainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return BlocProvider(
-      create: (_) => MenuBloc(),
-      child: BlocBuilder<MenuBloc, MenuState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: Stack(
-              children: [
-                SafeArea(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (Responsive.isDesktop(context))
-                        Expanded(
-                          child: SideMenuWidget(
-                            onMenuTap: (index) => onMenuTap(context, index),
-                            activeIndex: state.selectedPageIndex,
-                          ),
-                        ),
+    return BlocBuilder<MenuBloc, MenuState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              SafeArea(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (Responsive.isDesktop(context))
                       Expanded(
-                        flex: 5,
-                        child: _buildCurrentPage(state.selectedPageIndex),
+                        child: SideMenuWidget(
+                          onMenuTap: (index) => onMenuTap(context, index),
+                          activeIndex: state.selectedPageIndex,
+                        ),
                       ),
-                    ],
-                  ),
+                    Expanded(
+                      flex: 5,
+                      child: _buildCurrentPage(state.selectedPageIndex),
+                    ),
+                  ],
                 ),
-                if (!Responsive.isDesktop(context) && state.isMenuOpen)
-                  _buildOverlayMenu(context, state, width),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+              if (!Responsive.isDesktop(context) && state.isMenuOpen)
+                _buildOverlayMenu(context, state, width),
+            ],
+          ),
+        );
+      },
     );
   }
 

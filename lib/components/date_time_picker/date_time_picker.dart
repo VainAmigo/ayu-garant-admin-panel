@@ -18,37 +18,20 @@ class DateRangePickerChip extends StatefulWidget {
     this.borderRadius = 24,
     this.height = 34,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.onReset,
   });
 
-  /// Начальная дата диапазона
   final DateTime? initialStart;
-
-  /// Конечная дата диапазона
   final DateTime? initialEnd;
-
-  /// Колбек при выборе диапазона
   final ValueChanged<DateTimeRange?>? onChanged;
-
-  /// Текст плейсхолдера слева
   final String hintStart;
-
-  /// Текст плейсхолдера справа
   final String hintEnd;
-
-  /// Ограничения календаря (минимальная дата)
   final DateTime? firstDate;
-
-  /// Ограничения календаря (максимальная дата)
   final DateTime? lastDate;
-
-  /// Радиус скругления капсулы
   final double borderRadius;
-
-  /// Высота чипа
   final double height;
-
-  /// Внутренние отступы
   final EdgeInsets padding;
+  final Function()? onReset;
 
   @override
   State<DateRangePickerChip> createState() => _DateRangePickerChipState();
@@ -110,6 +93,7 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
       _end = null;
     });
     widget.onChanged?.call(null);
+    widget.onReset?.call();
   }
 
   String _format(DateTime? date) => date == null ? '' : _dateFormat.format(date);

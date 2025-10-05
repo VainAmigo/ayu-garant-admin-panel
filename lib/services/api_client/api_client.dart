@@ -13,7 +13,6 @@ final class ApiClient {
   }) {
     final dio = Dio();
     
-    // Базовая конфигурация
     dio.options.baseUrl = baseUrl ?? 'https://api.example.com';
     dio.options.connectTimeout = connectTimeout ?? const Duration(seconds: 30);
     dio.options.receiveTimeout = receiveTimeout ?? const Duration(seconds: 30);

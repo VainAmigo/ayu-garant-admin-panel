@@ -1,5 +1,7 @@
 import 'package:ayu_admin_panel/moduls/moduls.dart';
+import 'package:ayu_admin_panel/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'themes/app_theme/app_theme.dart';
 
@@ -9,6 +11,27 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MenuBloc()
+        ),
+        BlocProvider(
+          create: (context) => AnalyticBloc(
+            RepositoryImpl(const MocDataSource()),
+          ),
+        ),
+      ],
+      child: const AdminPanel(),
+    );
+  }
+}
+
+class AdminPanel extends StatelessWidget {
+  const AdminPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

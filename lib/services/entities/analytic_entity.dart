@@ -24,8 +24,10 @@ final class PlatformTypeEntity {
     this.ios,
   });
 
-  final String? android;
-  final String? ios;
+  final int? android;
+  final int? ios;
+
+  void operator [](String other) {}
 }
 
 @immutable

@@ -47,8 +47,8 @@ final class PlatformTypeResponse {
   factory PlatformTypeResponse.fromJson(Map<String, dynamic> json) => _$PlatformTypeResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PlatformTypeResponseToJson(this);
 
-  final String? android;
-  final String? ios;
+  final int? android;
+  final int? ios;
 
   PlatformTypeEntity toEntity() {
     return PlatformTypeEntity(

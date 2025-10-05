@@ -1,19 +1,19 @@
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/config/config.dart';
+import 'package:ayu_admin_panel/services/services.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticChartWidget extends StatelessWidget {
-  final List<Map<String, dynamic>> analyticData;
+  final AnalyticEntity analyticData;
 
   const AnalyticChartWidget({super.key, required this.analyticData});
 
   @override
   Widget build(BuildContext context) {
-    final data = analyticData.first;
 
-    final premiumTotalSum = (data['premiumSum'] ?? 0).toDouble();
-    final usedBonuses = (data['usedBonuses'] ?? 0).toDouble();
+    final premiumTotalSum = analyticData.financialData.totalPremiumSum;
+    final usedBonuses = analyticData.financialData.usedBonuses;
     final premiumSum = premiumTotalSum - usedBonuses;
 
     final moneySegments = [
@@ -29,14 +29,29 @@ class AnalyticChartWidget extends StatelessWidget {
       ),
     ];
 
-    final policyTypes = data['policyTypes'] as List<dynamic>? ?? [];
-    final policySegments = policyTypes.map((policy) {
-      return ChartSegment(
-        label: policy['type'] ?? '',
-        value: (policy['count'] ?? 0).toDouble(),
-        color: _getPolicyTypeColor(policy['type']),
-      );
-    }).toList();
+    final policyTypes = analyticData.policyTypes;
+    final policySegments = [
+      ChartSegment(
+        label: 'ОСАГО',
+        value: policyTypes.osago.toDouble(),
+        color: AppColors.primary,
+      ),
+      ChartSegment(
+        label: 'КАСКО',
+        value: policyTypes.kasko.toDouble(),
+        color: AppColors.primary50,
+      ),
+      ChartSegment(
+        label: 'КАСКО Мини',
+        value: policyTypes.kaskoMini.toDouble(),
+        color: AppColors.primary75,
+      ),
+      ChartSegment(
+        label: 'ДСАГО',
+        value: policyTypes.dsago.toDouble(),
+        color: AppColors.primary25,
+      ),
+    ];
 
     return Responsive(
       mobile: AnalyticChartMobile(
@@ -55,19 +70,6 @@ class AnalyticChartWidget extends StatelessWidget {
         title: premiumTotalSum.toString(),
       ),
     );
-  }
-
-  Color _getPolicyTypeColor(String type) {
-    switch (type) {
-      case 'КАСКО':
-        return AppColors.primary;
-      case 'ОСАГО':
-        return AppColors.primary50;
-      case 'Здоровье':
-        return AppColors.primary75;
-      default:
-        return AppColors.grey;
-    }
   }
 }
 

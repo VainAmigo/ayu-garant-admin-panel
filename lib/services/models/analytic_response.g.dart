@@ -30,8 +30,8 @@ Map<String, dynamic> _$AnalyticResponseToJson(AnalyticResponse instance) =>
 PlatformTypeResponse _$PlatformTypeResponseFromJson(
         Map<String, dynamic> json) =>
     PlatformTypeResponse(
-      android: json['android'] as String,
-      ios: json['ios'] as String,
+      android: json['android'] as int,
+      ios: json['ios'] as int,
     );
 
 Map<String, dynamic> _$PlatformTypeResponseToJson(

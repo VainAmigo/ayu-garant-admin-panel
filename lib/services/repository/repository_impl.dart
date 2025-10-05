@@ -9,7 +9,8 @@ final class RepositoryImpl implements Repository {
 
   @override
   Future<AnalyticEntity> getAnalytic(AnalyticParam param) async {
-    final data = await dataSource.getAnalytic(param.toBody());
+    final data = await const MocDataSource().getAnalytic(param.toBody());
+    // final data = await dataSource.getAnalytic(param.toBody());
     return data.toEntiy();
   }
 }

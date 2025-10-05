@@ -1,9 +1,10 @@
 import 'package:ayu_admin_panel/config/config.dart';
+import 'package:ayu_admin_panel/services/services.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticSystemStat extends StatelessWidget {
-  final List<Map<String, dynamic>> analyticData;
+  final AnalyticEntity analyticData;
 
   const AnalyticSystemStat({
     super.key,
@@ -35,7 +36,14 @@ class AnalyticSystemStat extends StatelessWidget {
 
   Widget _buildSegment({required bool isAndroid, required BuildContext context}) {
     final minWidth = Responsive.isDesktop(context) ? 0.3 : 0.4;
-    final platformPercentage = analyticData.isNotEmpty ? analyticData[0][isAndroid ? 'androidPercentage' : 'iosPercentage'] ?? 0 : 0;
+    
+    final androidCount = analyticData.platformType.android ?? 0;
+    final iosCount = analyticData.platformType.ios ?? 0;
+    final totalCount = androidCount + iosCount;
+    
+    final platformCount = isAndroid ? androidCount : iosCount;
+    final platformPercentage = totalCount > 0 ? (platformCount / totalCount) * 100 : 0.0;
+    
     final actualPercentage = platformPercentage / 100;
     final displayPercentage = actualPercentage < minWidth ? minWidth : actualPercentage;
     
