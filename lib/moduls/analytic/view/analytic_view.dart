@@ -17,7 +17,7 @@ class AnalyticView extends StatelessWidget {
             spacing: AppSpacing.defaultPadding,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(),
+              Header(title: "Аналитика"),
               if (Responsive.isMobile(context))
                 AnalyticFilter(),
               Row(

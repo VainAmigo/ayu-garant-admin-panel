@@ -1,0 +1,78 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'analytic_response.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+AnalyticResponse _$AnalyticResponseFromJson(Map<String, dynamic> json) =>
+    AnalyticResponse(
+      platformType: PlatformTypeResponse.fromJson(
+          json['platformType'] as Map<String, dynamic>),
+      totalPolicies: (json['totalPolicies'] as num).toInt(),
+      purchasedPolicies: (json['purchasedPolicies'] as num).toInt(),
+      financialData: FinancialDataResponse.fromJson(
+          json['financialData'] as Map<String, dynamic>),
+      policyTypes: PolicyTypesResponse.fromJson(
+          json['policyTypes'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$AnalyticResponseToJson(AnalyticResponse instance) =>
+    <String, dynamic>{
+      'platformType': instance.platformType,
+      'totalPolicies': instance.totalPolicies,
+      'purchasedPolicies': instance.purchasedPolicies,
+      'financialData': instance.financialData,
+      'policyTypes': instance.policyTypes,
+    };
+
+PlatformTypeResponse _$PlatformTypeResponseFromJson(
+        Map<String, dynamic> json) =>
+    PlatformTypeResponse(
+      android: json['android'] as String,
+      ios: json['ios'] as String,
+    );
+
+Map<String, dynamic> _$PlatformTypeResponseToJson(
+        PlatformTypeResponse instance) =>
+    <String, dynamic>{
+      'android': instance.android,
+      'ios': instance.ios,
+    };
+
+FinancialDataResponse _$FinancialDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    FinancialDataResponse(
+      totalPremiumSum: (json['totalPremiumSum'] as num).toDouble(),
+      premiumSum: (json['premiumSum'] as num).toDouble(),
+      usedBonuses: (json['usedBonuses'] as num).toDouble(),
+      accruedBonuses: (json['accruedBonuses'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$FinancialDataResponseToJson(
+        FinancialDataResponse instance) =>
+    <String, dynamic>{
+      'totalPremiumSum': instance.totalPremiumSum,
+      'premiumSum': instance.premiumSum,
+      'usedBonuses': instance.usedBonuses,
+      'accruedBonuses': instance.accruedBonuses,
+    };
+
+PolicyTypesResponse _$PolicyTypesResponseFromJson(
+        Map<String, dynamic> json) =>
+    PolicyTypesResponse(
+      osago: (json['osago'] as num).toInt(),
+      kasko: (json['kasko'] as num).toInt(),
+      kaskoMini: (json['kaskoMini'] as num).toInt(),
+      dsago: (json['dsago'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$PolicyTypesResponseToJson(
+        PolicyTypesResponse instance) =>
+    <String, dynamic>{
+      'osago': instance.osago,
+      'kasko': instance.kasko,
+      'kaskoMini': instance.kaskoMini,
+      'dsago': instance.dsago,
+    };

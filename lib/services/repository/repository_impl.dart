@@ -1,0 +1,15 @@
+import 'package:ayu_admin_panel/services/services.dart';
+import 'package:flutter/foundation.dart';
+
+@immutable
+final class RepositoryImpl implements Repository {
+  const RepositoryImpl(this.dataSource);
+
+  final DataSource dataSource;
+
+  @override
+  Future<AnalyticEntity> getAnalytic(AnalyticParam param) async {
+    final data = await dataSource.getAnalytic(param.toBody());
+    return data.toEntiy();
+  }
+}

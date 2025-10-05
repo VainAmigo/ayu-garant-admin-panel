@@ -21,6 +21,23 @@ class AppTypography {
     color: AppColors.grey,
   );
 
+  static const grey14w500 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.grey,
+  );
+
+  static const white14w500 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.white,
+  );
+
+  static const primary14w500 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.primary,
+  );
   // static const grey14w500 = TextStyle(
   //   fontSize: 14,
   //   fontWeight: FontWeight.w500,
