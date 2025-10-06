@@ -1,6 +1,8 @@
 export 'api_client/api_client.dart';
 export 'entities/analytic_entity.dart';
 export 'models/analytic_response.dart';
+export 'models/policy_report_response.dart';
+export 'entities/policy_report_entity.dart';
 
 export 'repository/repository.dart';
 export 'repository/repository_impl.dart';

@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AnalyticBloc(
-            RepositoryImpl(const MocDataSource()),
+            context.read<Repository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => PolicyReportCubit(
+            context.read<Repository>(),
           ),
         ),
       ],

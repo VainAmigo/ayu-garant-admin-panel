@@ -20,4 +20,20 @@ final class RemoteDataSource implements DataSource {
       throw Exception('Ошибка получения аналитических данных: $e');
     }
   }
+
+  @override
+  Future<List<PolicyReportResponse>> getPolicyReport(PolicyReportParam param) async {
+    try {
+      final response = await client.get<List<dynamic>>(
+        '/reports/policy',
+        queryParameters: param.toJson(),
+      );
+
+      return (response.data as List)
+          .map((json) => PolicyReportResponse.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception('Ошибка получения данных о полисах: $e');
+    }
+  }
 }

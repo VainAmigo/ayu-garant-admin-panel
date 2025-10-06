@@ -13,4 +13,11 @@ final class RepositoryImpl implements Repository {
     // final data = await dataSource.getAnalytic(param.toBody());
     return data.toEntiy();
   }
+
+  @override
+  Future<List<PolicyReportEntity>> getPolicyReport(PolicyReportParam param) async {
+    final data = await const MocDataSource().getPolicyReport(param.toBody());
+    // final data = await dataSource.getPolicyReport(param.toBody());
+    return data.map((response) => response.toEntity()).toList();
+  }
 }
