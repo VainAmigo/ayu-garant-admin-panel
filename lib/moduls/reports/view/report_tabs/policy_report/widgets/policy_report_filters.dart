@@ -31,15 +31,6 @@ class _PolicyReportFiltersState extends State<PolicyReportFilters> {
   DateTime? _endDate;
   bool? _isActive;
 
-  // Опции для выпадающего списка типов полисов
-  static const List<DropdownItem<String>> _policyTypeItems = [
-    DropdownItem(value: 'OSAGO', label: 'ОСАГО'),
-    DropdownItem(value: 'CASCO', label: 'КАСКО'),
-    DropdownItem(value: 'mini-CASCO', label: 'мини КАСКО'),
-    DropdownItem(value: 'DSAGO', label: 'ДСАГО'),
-    DropdownItem(value: 'all', label: 'Все'),
-  ];
-
   // Опции для фильтра статуса
   static const List<DropdownItem<bool?>> _statusItems = [
     DropdownItem(value: null, label: 'Все'),
@@ -107,8 +98,6 @@ class _PolicyReportFiltersState extends State<PolicyReportFilters> {
   List<Widget> _buildFilterWidgets() {
     return [
       CustomDropDown<String>(
-        hintText: 'Выберите тип',
-        items: _policyTypeItems,
         value: _selectedPolicyType,
         onChanged: _onPolicyTypeChanged,
       ),
@@ -120,7 +109,6 @@ class _PolicyReportFiltersState extends State<PolicyReportFilters> {
         hintEnd: 'Дата окончания',
       ),
       CustomDropDown<bool?>(
-        hintText: 'Выберите статус',
         items: _statusItems,
         value: _isActive,
         onChanged: _onStatusChanged,
