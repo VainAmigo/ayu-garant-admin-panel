@@ -24,5 +24,7 @@ final class PolicyReportSuccess extends PolicyReportState {
 
 @immutable
 final class PolicyReportError extends PolicyReportState {
-  const PolicyReportError(e);
+  const PolicyReportError(this.error);
+
+  final dynamic error;
 }
