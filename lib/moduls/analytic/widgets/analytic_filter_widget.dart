@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/moduls/analytic/analytic.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
@@ -11,22 +13,39 @@ class AnalyticFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedStatus;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.defaultPadding),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: AnalyticFilterWidget(selectedStatus: selectedStatus, onApplyFilter: onApplyFilter),
+      child: BlocListener<AnalyticBloc, AnalyticState>(
+        listener: (context, state) {
+        },
+        child: BlocBuilder<AnalyticBloc, AnalyticState>(
+          buildWhen: (previous, current) {
+            return previous.prepareState != current.prepareState;
+          },
+          builder: (context, state) {
+            return AnalyticFilterWidget(
+              prepareState: state.prepareState,
+              onApplyFilter: onApplyFilter,
+            );
+          },
+        ),
+      ),
     );
   }
 }
 
 class AnalyticFilterWidget extends StatefulWidget {
-  const AnalyticFilterWidget({super.key, this.selectedStatus, required this.onApplyFilter});
+  const AnalyticFilterWidget({
+    super.key, 
+    required this.prepareState, 
+    required this.onApplyFilter
+  });
 
-  final String? selectedStatus;
+  final AnalyticPrepareState prepareState;
   final Function() onApplyFilter;
 
   @override
@@ -38,44 +57,38 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
   PeriodFilter _selectedPeriod = PeriodFilter.day;
   DateTime? _startDate;
   DateTime? _endDate;
+  
+  Timer? _debounceTimer;
+  static const Duration _debounceDelay = Duration(milliseconds: 500);
 
   @override
   void initState() {
     super.initState();
-    _selectedStatus = widget.selectedStatus;
+    _initializeFromPrepareState();
   }
 
-
-  String _getDateRangeString(PeriodFilter period) {
-    switch (period) {
-      case PeriodFilter.day:
-        return 'day';
-      case PeriodFilter.week:
-        return 'week';
-      case PeriodFilter.month:
-        return 'month';
-      case PeriodFilter.year:
-        return 'year';
-      case PeriodFilter.all:
-        return 'all';
+  @override
+  void didUpdateWidget(AnalyticFilterWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.prepareState != widget.prepareState) {
+      _initializeFromPrepareState();
     }
   }
 
-  void _updateFilterData() {
-    context.read<AnalyticBloc>().add(SetFilterData(
-      startDate: _startDate,
-      endDate: _endDate,
-      dateRange: _getDateRangeString(_selectedPeriod),
-      policyType: _selectedStatus,
-    ));
+  void _initializeFromPrepareState() {
+    _selectedStatus = widget.prepareState.policyType;
+    _startDate = widget.prepareState.startDate;
+    _endDate = widget.prepareState.endDate;
+    
+    if (widget.prepareState.dateRange != null) {
+      _selectedPeriod = _getPeriodFromString(widget.prepareState.dateRange!);
+    }
   }
 
-  void _resetDatePicker() {
-    setState(() {
-      _startDate = null;
-      _endDate = null;
-    });
-    _updateFilterData();
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -95,7 +108,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
             setState(() {
               _selectedPeriod = period;
             });
-            _updateFilterData();
+            _debouncedUpdateFilterData();
           },
         ),
         const SizedBox(height: AppSpacing.defaultPadding),
@@ -105,7 +118,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
             setState(() {
               _selectedStatus = value;
             });
-            _updateFilterData();
+            _debouncedUpdateFilterData();
           },
         ),
         const SizedBox(height: AppSpacing.defaultPadding),
@@ -117,7 +130,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
               _startDate = range?.start;
               _endDate = range?.end;
             });
-            _updateFilterData();
+            _debouncedUpdateFilterData();
           },
           onReset: () {
             _resetDatePicker();
@@ -130,5 +143,61 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
         ),
       ],
     );
+  }
+
+  void _debouncedUpdateFilterData() {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_debounceDelay, () {
+      _updateFilterData();
+    });
+  }
+
+  void _updateFilterData() {
+    context.read<AnalyticBloc>().add(SetFilterData(
+      startDate: _startDate,
+      endDate: _endDate,
+      dateRange: _getDateRangeString(_selectedPeriod),
+      policyType: _selectedStatus,
+    ));
+  }
+
+  void _resetDatePicker() {
+    setState(() {
+      _startDate = null;
+      _endDate = null;
+    });
+    _debouncedUpdateFilterData();
+  }
+
+  String _getDateRangeString(PeriodFilter period) {
+    switch (period) {
+      case PeriodFilter.day:
+        return 'day';
+      case PeriodFilter.week:
+        return 'week';
+      case PeriodFilter.month:
+        return 'month';
+      case PeriodFilter.year:
+        return 'year';
+      case PeriodFilter.all:
+        return 'all';
+    }
+  }
+
+  PeriodFilter _getPeriodFromString(String dateRange) {
+    switch (dateRange) {
+      case 'day':
+        return PeriodFilter.day;
+      case 'week':
+        return PeriodFilter.week;
+      case 'month':
+        return PeriodFilter.month;
+      case 'year':
+        return PeriodFilter.year;
+      case 'all':
+        return PeriodFilter.all;
+      default:
+        return PeriodFilter.day;
+    }
   }
 }
