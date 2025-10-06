@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ayu_admin_panel/components/components.dart';
+import 'package:ayu_admin_panel/config/config.dart';
 import 'package:ayu_admin_panel/moduls/analytic/analytic.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,7 @@ class AnalyticFilter extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: BlocListener<AnalyticBloc, AnalyticState>(
-        listener: (context, state) {
-        },
+        listener: (context, state) {},
         child: BlocBuilder<AnalyticBloc, AnalyticState>(
           buildWhen: (previous, current) {
             return previous.prepareState != current.prepareState;
@@ -40,9 +40,9 @@ class AnalyticFilter extends StatelessWidget {
 
 class AnalyticFilterWidget extends StatefulWidget {
   const AnalyticFilterWidget({
-    super.key, 
-    required this.prepareState, 
-    required this.onApplyFilter
+    super.key,
+    required this.prepareState,
+    required this.onApplyFilter,
   });
 
   final AnalyticPrepareState prepareState;
@@ -57,7 +57,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
   PeriodFilter _selectedPeriod = PeriodFilter.day;
   DateTime? _startDate;
   DateTime? _endDate;
-  
+
   Timer? _debounceTimer;
   static const Duration _debounceDelay = Duration(milliseconds: 500);
 
@@ -79,7 +79,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
     _selectedStatus = widget.prepareState.policyType;
     _startDate = widget.prepareState.startDate;
     _endDate = widget.prepareState.endDate;
-    
+
     if (widget.prepareState.dateRange != null) {
       _selectedPeriod = _getPeriodFromString(widget.prepareState.dateRange!);
     }
@@ -94,53 +94,104 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: AppSpacing.defaultPadding,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
       children: [
-        Text(
-          'Фильтр',
-          style: AppTypography.black20w400,
-          textAlign: TextAlign.start,
+        Row(
+          spacing: AppSpacing.defaultPadding,
+          children: [
+            Text(
+              'Фильтр',
+              style: AppTypography.black20w400,
+              textAlign: TextAlign.start,
+            ),
+            const Spacer(),
+            PrimaryButton(
+              text: 'Сформировать',
+              onPressed: widget.onApplyFilter,
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.defaultPadding),
-        DotTagFilter(
-          initialPeriod: _selectedPeriod,
-          onPeriodChanged: (PeriodFilter period) {
-            setState(() {
-              _selectedPeriod = period;
-            });
-            _debouncedUpdateFilterData();
-          },
-        ),
-        const SizedBox(height: AppSpacing.defaultPadding),
-        CustomDropDown<String>(
-          value: _selectedStatus,
-          onChanged: (value) {
-            setState(() {
-              _selectedStatus = value;
-            });
-            _debouncedUpdateFilterData();
-          },
-        ),
-        const SizedBox(height: AppSpacing.defaultPadding),
-        DateRangePickerChip(
-          initialStart: _startDate,
-          initialEnd: _endDate,
-          onChanged: (DateTimeRange? range) {
-            setState(() {
-              _startDate = range?.start;
-              _endDate = range?.end;
-            });
-            _debouncedUpdateFilterData();
-          },
-          onReset: () {
-            _resetDatePicker();
-          },
-        ),
-        const SizedBox(height: AppSpacing.defaultPadding),
-        PrimaryButton(
-          text: 'Сформировать', 
-          onPressed: widget.onApplyFilter,
-        ),
+        Responsive.isDesktop(context)
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                spacing: AppSpacing.defaultPadding,
+                children: [
+                  DotTagFilter(
+                    initialPeriod: _selectedPeriod,
+                    onPeriodChanged: (PeriodFilter period) {
+                      setState(() {
+                        _selectedPeriod = period;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                  ),
+                  CustomDropDown<String>(
+                    value: _selectedStatus,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedStatus = value;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                  ),
+                  DateRangePickerChip(
+                    initialStart: _startDate,
+                    initialEnd: _endDate,
+                    onChanged: (DateTimeRange? range) {
+                      setState(() {
+                        _startDate = range?.start;
+                        _endDate = range?.end;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                    onReset: () {
+                      _resetDatePicker();
+                    },
+                  ),
+                ],
+              )
+            : Column(
+                spacing: AppSpacing.defaultPadding, 
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  DotTagFilter(
+                    initialPeriod: _selectedPeriod,
+                    onPeriodChanged: (PeriodFilter period) {
+                      setState(() {
+                        _selectedPeriod = period;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                  ),
+                  CustomDropDown<String>(
+                    value: _selectedStatus,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedStatus = value;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                  ),
+                  DateRangePickerChip(
+                    initialStart: _startDate,
+                    initialEnd: _endDate,
+                    onChanged: (DateTimeRange? range) {
+                      setState(() {
+                        _startDate = range?.start;
+                        _endDate = range?.end;
+                      });
+                      _debouncedUpdateFilterData();
+                    },
+                    onReset: () {
+                      _resetDatePicker();
+                    },
+                  ),
+                ],
+              ),
       ],
     );
   }
@@ -153,12 +204,14 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
   }
 
   void _updateFilterData() {
-    context.read<AnalyticBloc>().add(SetFilterData(
-      startDate: _startDate,
-      endDate: _endDate,
-      dateRange: _getDateRangeString(_selectedPeriod),
-      policyType: _selectedStatus,
-    ));
+    context.read<AnalyticBloc>().add(
+      SetFilterData(
+        startDate: _startDate,
+        endDate: _endDate,
+        dateRange: _getDateRangeString(_selectedPeriod),
+        policyType: _selectedStatus,
+      ),
+    );
   }
 
   void _resetDatePicker() {

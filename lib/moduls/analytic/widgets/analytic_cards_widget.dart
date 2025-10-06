@@ -21,11 +21,11 @@ class AnlyticCardsGrid extends StatelessWidget {
       ),
       tablet: AnalyticInfoCardGridView(
         analyticData: analyticData,
-        childAspectRatio: 1.1,
+        childAspectRatio: 1.5,
       ),
       desktop: AnalyticInfoCardGridView(
         analyticData: analyticData,
-        childAspectRatio: size.width < 1400 && size.width > 1300 ? 1.5 : 1.2,
+        childAspectRatio: size.width < 1400 && size.width > 1300 ? 1.5 : 2,
       ),
     );
   }

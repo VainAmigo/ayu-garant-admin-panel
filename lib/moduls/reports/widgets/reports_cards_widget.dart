@@ -32,7 +32,7 @@ class ReportsTabsWidget extends StatelessWidget {
       ),
       desktop: ReportsTabsGridView(
         crossAxisCount: 4,
-        childAspectRatio: 1.5,
+        childAspectRatio: size.width > 1300 ? 1.9 : 1.5,
         selectedReport: selectedReport,
         onReportSelected: onReportSelected,
       ),

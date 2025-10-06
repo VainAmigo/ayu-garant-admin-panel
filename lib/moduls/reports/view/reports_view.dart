@@ -13,12 +13,6 @@ class ReportsView extends StatefulWidget {
 class _ReportsViewState extends State<ReportsView> {
   ReportType _selectedReport = ReportType.policies;
 
-  void _selectReport(ReportType reportType) {
-    setState(() {
-      _selectedReport = reportType;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +34,12 @@ class _ReportsViewState extends State<ReportsView> {
         ),
       ),
     );
+  }
+
+  void _selectReport(ReportType reportType) {
+    setState(() {
+      _selectedReport = reportType;
+    });
   }
 
   Widget _buildReportContent() {
