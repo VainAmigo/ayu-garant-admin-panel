@@ -104,10 +104,10 @@ class _PolicyReportViewState extends State<PolicyReportView> {
               return switch (state) {
                 PolicyReportInitial() => const CenteredIndicator(),
                 PolicyReportLoading() => const CenteredIndicator(),
-                PolicyReportSuccess() => PolicyReportTable(data: state.entity),
+                PolicyReportSuccess() => const SizedBox.shrink(),
                 PolicyReportError() => Center(
                   child: Text('Ошибка загрузки данных: ${state.error}'),
-                ),
+                ), 
               };
             },
           ),
@@ -138,6 +138,11 @@ void _onApplyFilter(
     policyType: filters.policyType,
     isActive: filters.isActive,
   );
+
+  print('param: $startDate');
+  print('param: $endDate');
+  print('param: $policyType');
+  print('param: $isActive');
 
   bloc.getPolicyReport(param: param);
 }

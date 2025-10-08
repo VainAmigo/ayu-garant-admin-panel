@@ -9,3 +9,4 @@ export 'drawer/custom_drawer.dart';
 export 'chart/custom_chart.dart';
 export 'indicator/centered_indicator.dart';
 export 'filter/filter.dart';
+export 'custom_table/custom_table.dart';

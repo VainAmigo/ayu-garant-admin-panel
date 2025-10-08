@@ -36,7 +36,7 @@ class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
       width: 200,
       height: 34,
       child: DropdownButtonFormField<T>(
-        value: widget.value,
+        initialValue: widget.value,
         onChanged: widget.enabled ? widget.onChanged : null,
         decoration: InputDecoration(
           hintText: widget.hintText,
