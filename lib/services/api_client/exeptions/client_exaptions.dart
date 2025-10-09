@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 /// Optional [error], [message], [stackTrace],
 /// and [statusCode] provide additional details.
 @immutable
-final class ClientException implements Exception {
-  const ClientException(
+final class RemoteException implements Exception {
+  const RemoteException(
     this.failureType, {
     this.error,
     this.message,

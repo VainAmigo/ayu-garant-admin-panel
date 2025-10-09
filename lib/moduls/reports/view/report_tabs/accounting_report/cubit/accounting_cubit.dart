@@ -12,13 +12,13 @@ class AccountingCubit extends Cubit<AccountingState> {
 
   final Repository repository;
 
-  Future<void> getAccounting({
-    required AccountingParam param,
+  Future<void> getAccountingReport({
+    required ReportParam param,
   }) async {
     try {
       if (state is AccountingLoading) return;
       emit(const AccountingLoading());
-      final data = await repository.getAccountingReport(param);
+      final data = await repository.getReport(param);
       emit(AccountingSuccess(data));
     } catch (e, s) {
       log('Policy report Error: $e\n$s');

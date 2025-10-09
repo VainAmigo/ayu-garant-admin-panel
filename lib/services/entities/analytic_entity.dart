@@ -1,3 +1,4 @@
+import 'package:ayu_admin_panel/services/services.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -19,15 +20,10 @@ final class AnalyticEntity {
 
 @immutable
 final class PlatformTypeEntity {
-  const PlatformTypeEntity({
-    this.android,
-    this.ios,
-  });
+  const PlatformTypeEntity({this.android, this.ios});
 
   final int? android;
   final int? ios;
-
-  void operator [](String other) {}
 }
 
 @immutable
@@ -73,21 +69,12 @@ final class AnalyticParam {
   final DateTime? endDate;
   final String? dateRange;
 
-  AnalyticParam toBody() {
-    return AnalyticParam(
+  AnalyticBody toBody() {
+    return AnalyticBody(
       platformType: platformType,
       startDate: startDate,
       endDate: endDate,
       dateRange: dateRange,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'platformType': platformType,
-      'startDate': startDate?.toIso8601String(),
-      'endDate': endDate?.toIso8601String(),
-      'dateRange': dateRange,
-    };
   }
 }

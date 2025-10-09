@@ -13,12 +13,12 @@ class PolicyReportCubit extends Cubit<PolicyReportState> {
   final Repository repository;
 
   Future<void> getPolicyReport({
-    required PolicyReportParam param,
+    required ReportParam param,
   }) async {
     try {
       if (state is PolicyReportLoading) return;
       emit(const PolicyReportLoading());
-      final data = await repository.getPolicyReport(param);
+      final data = await repository.getReport(param);
       emit(PolicyReportSuccess(data));
     } catch (e, s) {
       log('Policy report Error: $e\n$s');

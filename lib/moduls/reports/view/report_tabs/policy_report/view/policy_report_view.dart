@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/services/services.dart';
@@ -13,7 +15,7 @@ class PolicyReportView extends StatefulWidget {
 }
 
 class _PolicyReportViewState extends State<PolicyReportView> {
-  final PolicyReportParam _defaultParams = PolicyReportParam(dateRange: PeriodFilter.day.name);
+  final ReportParam _defaultParams = ReportParam(dateRange: PeriodFilter.day.name);
 
   @override
   void initState() {
@@ -118,7 +120,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     String? policyType,
     PeriodFilter? period,
   ) {
-    final PolicyReportParam filters = PolicyReportParam(
+    final ReportParam filters = ReportParam(
       startDate: startDate,
       endDate: endDate,
       policyType: policyType,
@@ -126,17 +128,17 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     );
     final bloc = context.read<PolicyReportCubit>();
 
-    final param = PolicyReportParam(
+    final param = ReportParam(
       startDate: filters.startDate,
       endDate: filters.endDate,
       policyType: filters.policyType,
       dateRange: filters.dateRange,
     );
 
-    print('param: $startDate');
-    print('param: $endDate');
-    print('param: $policyType');
-    print('param: $period');
+    log('param: $startDate');
+    log('param: $endDate');
+    log('param: $policyType');
+    log('param: $period');
 
     bloc.getPolicyReport(param: param);
   }

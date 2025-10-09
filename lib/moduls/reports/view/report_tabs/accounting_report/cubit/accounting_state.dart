@@ -19,7 +19,7 @@ final class AccountingLoading extends AccountingState {
 final class AccountingSuccess extends AccountingState {
   const AccountingSuccess(this.entity);
 
-  final List<AccountingEntity> entity;
+  final List<ReportEntity> entity;
 }
 
 @immutable

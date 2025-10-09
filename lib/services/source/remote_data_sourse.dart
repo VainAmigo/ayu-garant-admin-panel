@@ -5,35 +5,32 @@ import 'package:flutter/foundation.dart';
 final class RemoteDataSource implements DataSource {
   const RemoteDataSource(this.client);
 
-  final ApiClient client;
+  final RemoteClient client;
 
   @override
   Future<AnalyticResponse> getAnalytic(AnalyticParam param) async {
-    try {
-      final response = await client.get<Map<String, dynamic>>(
-        '/analytic',
-        queryParameters: param.toJson(),
-      );
+    final response = await client.post<Map<String, dynamic>>(
+      '/analytic',
+      body: param.toBody().toJson(),
+    );
 
-      return AnalyticResponse.fromJson(response.data!);
-    } catch (e) {
-      throw Exception('Ошибка получения аналитических данных: $e');
-    }
+    return response.fold((l) => throw l, AnalyticResponse.fromJson);
   }
 
   @override
-  Future<List<PolicyReportResponse>> getPolicyReport(PolicyReportParam param) async {
-    try {
-      final response = await client.get<List<dynamic>>(
-        '/reports/policy',
-        queryParameters: param.toJson(),
-      );
+  Future<List<ReportResponse>> getReport(ReportParam param) async {
+    final response = await client.post<List<dynamic>>(
+      '/reports/policy',
+      body: param.toBody().toJson(),
+    );
 
-      return (response.data as List)
-          .map((json) => PolicyReportResponse.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      throw Exception('Ошибка получения данных о полисах: $e');
-    }
+    return response.fold(
+      (l) => throw l,
+      (r) => r
+          .map(
+            (e) => ReportResponse.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
+    );
   }
 }

@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:ayu_admin_panel/components/components.dart';
+import 'package:ayu_admin_panel/moduls/moduls.dart';
+import 'package:ayu_admin_panel/services/services.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountingReportView extends StatefulWidget {
   const AccountingReportView({super.key});
@@ -14,6 +19,15 @@ class _AccountingReportViewState extends State<AccountingReportView> {
   DateTime? _startDate;
   DateTime? _endDate;
   PeriodFilter _selectedPeriod = PeriodFilter.day;
+  String? _selectedPaymentSystem;
+
+  final ReportParam _defaultParams = ReportParam(dateRange: PeriodFilter.day.name);
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AccountingCubit>().getAccountingReport(param: _defaultParams);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +41,23 @@ class _AccountingReportViewState extends State<AccountingReportView> {
             onFiltersReset: () => _resetFilters(),
             filtersList: _buildFilterWidgets(),
           ),
+          BlocBuilder<AccountingCubit, AccountingState>(
+            builder: (context, state) {
+              return switch (state) {
+                AccountingInitial() => const CenteredIndicator(),
+                AccountingLoading() => const CenteredIndicator(),
+                AccountingSuccess() => AccountingReportTableWidget(
+                  data: state.entity,
+                ),
+                AccountingError() => Center(
+                  child: Text('Ошибка загрузки данных: ${state.error}'),
+                ),
+              };
+            },
+          ),
         ],
       ),
     );
-  }
-
-  void _onApplyFilter(BuildContext context) {
-    // TODO: Implement _onApplyFilter
   }
 
   void _resetFilters() {
@@ -52,12 +76,24 @@ class _AccountingReportViewState extends State<AccountingReportView> {
     });
   }
 
+  void _onPaymentSystemChanged(String? value) {
+    setState(() {
+      _selectedPaymentSystem = value == 'all' ? null : value;
+    });
+  }
+
   void _onDateRangeChanged(DateTimeRange? range) {
     setState(() {
       _startDate = range?.start;
       _endDate = range?.end;
     });
   }
+
+  final List<DropdownItem<String>> _paymentSystemItems = [
+    DropdownItem(value: 'all', label: 'Все'),
+    DropdownItem(value: 'Finik', label: 'Финик'),
+    DropdownItem(value: 'FreedomPay', label: 'FreedomPay'),
+  ];
 
   List<Widget> _buildFilterWidgets() {
     return [
@@ -80,6 +116,31 @@ class _AccountingReportViewState extends State<AccountingReportView> {
         hintStart: 'Дата начала',
         hintEnd: 'Дата окончания',
       ),
+      CustomDropDown<String>(
+        value: _selectedPaymentSystem,
+        items: _paymentSystemItems,
+        onChanged: _onPaymentSystemChanged,
+      ),
     ];
+  }
+
+  void _onApplyFilter(BuildContext context) {
+    final bloc = context.read<AccountingCubit>();
+    final param = ReportParam(
+      startDate: _startDate,
+      endDate: _endDate,
+      policyType: _selectedPolicyType,
+      dateRange: _selectedPeriod.name,
+      paymentSystem: _selectedPaymentSystem,
+    );
+    
+    log('param: ${param.toBody().toJson()}');
+    log('param: ${_selectedPolicyType}');
+    log('param: ${_startDate}');
+    log('param: ${_endDate}');
+    log('param: ${_selectedPeriod}');
+    log('param: ${_selectedPaymentSystem}');
+
+    bloc.getAccountingReport(param: param);
   }
 }

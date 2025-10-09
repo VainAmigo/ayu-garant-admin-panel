@@ -6,7 +6,7 @@ abstract class ErrorParser {
     if (error is String) return error;
     if (error is Map<String, dynamic>) {
       if (error.containsKey('message')) return error['message'].toString();
-    } else if (error is ClientException) {
+    } else if (error is RemoteException) {
       final dioException = error.dioException;
       final response = dioException?.response;
       if (response != null) {

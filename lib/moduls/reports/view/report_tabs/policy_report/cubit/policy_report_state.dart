@@ -19,7 +19,7 @@ final class PolicyReportLoading extends PolicyReportState {
 final class PolicyReportSuccess extends PolicyReportState {
   const PolicyReportSuccess(this.entity);
 
-  final List<PolicyReportEntity> entity;
+  final List<ReportEntity> entity;
 }
 
 @immutable

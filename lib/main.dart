@@ -1,12 +1,31 @@
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/services/services.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'themes/app_theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  final storage = await PreferencesStorage.getInstance();
+
+  final remoteClient = RemoteClient(
+    dio: Dio(BaseOptions(baseUrl: 'https://')),
+    token: () => storage.readString(key: 'access_token'),
+    network: NetworkClient(Connectivity()),
+    storage: storage,
+  )..initilize();
+
+  final dataSource = RemoteDataSource(remoteClient);
+  final repository = RepositoryImpl(dataSource);
+
+  runApp(
+    RepositoryProvider<Repository>(
+      create: (context) => repository,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,12 +37,17 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AnalyticBloc(
-            RepositoryImpl(RemoteDataSource(ApiClient())),
+            context.read<Repository>()
           ),
         ),
         BlocProvider(
           create: (context) => PolicyReportCubit(
-            RepositoryImpl(RemoteDataSource(ApiClient())),
+            context.read<Repository>()
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AccountingCubit(
+            context.read<Repository>()
           ),
         ),
       ],

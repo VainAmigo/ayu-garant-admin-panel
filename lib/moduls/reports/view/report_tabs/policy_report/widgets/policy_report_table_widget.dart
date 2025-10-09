@@ -6,51 +6,51 @@ import 'package:flutter/material.dart';
 class PolicyReportTableWidget extends StatelessWidget {
   const PolicyReportTableWidget({super.key, required this.data, this.onExport});
 
-  final List<PolicyReportEntity> data;
+  final List<ReportEntity> data;
   final Function()? onExport;
 
   @override
   Widget build(BuildContext context) {
     final columns = [
-      TableColumn<PolicyReportEntity>(
-        title: 'Номер полиса',
-        dataExtractor: (item) => item.policyNumber,
+      TableColumn<ReportEntity>(
+        title: 'номер полиса',
+        dataExtractor: (item) => item.policyNumber ?? '',
         width: 100,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Дата оформления',
-        dataExtractor: (item) => item.creationDate.formatted,
+      TableColumn<ReportEntity>(
+        title: 'дата оформления',
+        dataExtractor: (item) => item.creationDate?.formatted ?? '',
         width: 80,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Период действия',
+      TableColumn<ReportEntity>(
+        title: 'период действия',
         dataExtractor: (item) =>
-            '${item.startDate.formatted} - ${item.endDate.formatted}',
+            '${item.startDate?.formatted} - ${item.endDate?.formatted}',
         width: 150,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Сумма',
-        dataExtractor: (item) => '${item.policyCost.toStringAsFixed(2)} c',
+      TableColumn<ReportEntity>(
+        title: 'сумма',
+        dataExtractor: (item) => '${item.policyCost?.toString()} c',
         width: 70,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Тип полиса',
-        dataExtractor: (item) => getTranslatePolicyType(item.policyType),
+      TableColumn<ReportEntity>(
+        title: 'тип полиса',
+        dataExtractor: (item) => getTranslatePolicyType(item.policyType ?? ''),
         width: 80,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Автомобиль',
-        dataExtractor: (item) => '${item.brand} ${item.model}',
+      TableColumn<ReportEntity>(
+        title: 'автомобиль',
+        dataExtractor: (item) => '${item.carBrand} ${item.carModel}',
         width: 200,
       ),
-      TableColumn<PolicyReportEntity>(
-        title: 'Владелец',
-        dataExtractor: (item) => item.policyHolderName,
+      TableColumn<ReportEntity>(
+        title: 'владелец',
+        dataExtractor: (item) => item.policyHolderName ?? '',
         width: 200,
       ),
     ];
 
-    return CustomTable<PolicyReportEntity>(
+    return CustomTable<ReportEntity>(
       columns: columns,
       data: data,
       enableHorizontalScroll: true,
