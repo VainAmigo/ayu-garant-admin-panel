@@ -1,9 +1,7 @@
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/config/config.dart';
-import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -23,11 +21,6 @@ class Header extends StatelessWidget {
       ),
       child: Row(
           children: [
-            if (!Responsive.isDesktop(context))
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () => context.read<MenuBloc>().add(const MenuOpenCloseEvent()),
-              ),
             if (!Responsive.isMobile(context))
               Text(
                 title,

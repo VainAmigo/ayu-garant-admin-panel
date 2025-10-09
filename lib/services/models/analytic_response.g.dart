@@ -10,8 +10,8 @@ AnalyticResponse _$AnalyticResponseFromJson(Map<String, dynamic> json) =>
     AnalyticResponse(
       platformType: PlatformTypeResponse.fromJson(
           json['platformType'] as Map<String, dynamic>),
-      totalPolicies: (json['totalPolicies'] as num).toInt(),
-      purchasedPolicies: (json['purchasedPolicies'] as num).toInt(),
+      totalPolicies: json['totalPolicies'] as int,
+      purchasedPolicies: json['purchasedPolicies'] as int,
       financialData: FinancialDataResponse.fromJson(
           json['financialData'] as Map<String, dynamic>),
       policyTypes: PolicyTypesResponse.fromJson(
@@ -20,18 +20,18 @@ AnalyticResponse _$AnalyticResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AnalyticResponseToJson(AnalyticResponse instance) =>
     <String, dynamic>{
-      'platformType': instance.platformType,
+      'platformType': instance.platformType.toJson(),
       'totalPolicies': instance.totalPolicies,
       'purchasedPolicies': instance.purchasedPolicies,
-      'financialData': instance.financialData,
-      'policyTypes': instance.policyTypes,
+      'financialData': instance.financialData.toJson(),
+      'policyTypes': instance.policyTypes.toJson(),
     };
 
 PlatformTypeResponse _$PlatformTypeResponseFromJson(
         Map<String, dynamic> json) =>
     PlatformTypeResponse(
-      android: json['android'] as int,
-      ios: json['ios'] as int,
+      android: json['android'] as int?,
+      ios: json['ios'] as int?,
     );
 
 Map<String, dynamic> _$PlatformTypeResponseToJson(
@@ -59,13 +59,12 @@ Map<String, dynamic> _$FinancialDataResponseToJson(
       'accruedBonuses': instance.accruedBonuses,
     };
 
-PolicyTypesResponse _$PolicyTypesResponseFromJson(
-        Map<String, dynamic> json) =>
+PolicyTypesResponse _$PolicyTypesResponseFromJson(Map<String, dynamic> json) =>
     PolicyTypesResponse(
-      osago: (json['osago'] as num).toInt(),
-      kasko: (json['kasko'] as num).toInt(),
-      kaskoMini: (json['kaskoMini'] as num).toInt(),
-      dsago: (json['dsago'] as num).toInt(),
+      osago: json['osago'] as int,
+      kasko: json['kasko'] as int,
+      kaskoMini: json['kaskoMini'] as int,
+      dsago: json['dsago'] as int,
     );
 
 Map<String, dynamic> _$PolicyTypesResponseToJson(
@@ -75,4 +74,26 @@ Map<String, dynamic> _$PolicyTypesResponseToJson(
       'kasko': instance.kasko,
       'kaskoMini': instance.kaskoMini,
       'dsago': instance.dsago,
+    };
+
+AnalyticBody _$AnalyticBodyFromJson(
+        Map<String, dynamic> json) =>
+    AnalyticBody(
+      platformType: json['platformType'] as String?,
+      startDate: json['startDate'] == null
+          ? null
+          : DateTime.parse(json['startDate'] as String),
+      endDate: json['endDate'] == null
+          ? null
+          : DateTime.parse(json['endDate'] as String),
+      dateRange: json['dateRange'] as String?,
+    );
+
+Map<String, dynamic> _$AnalyticBodyToJson(
+        AnalyticBody instance) =>
+    <String, dynamic>{
+      'platformType': instance.platformType,
+      'startDate': instance.startDate?.toIso8601String(),
+      'endDate': instance.endDate?.toIso8601String(),
+      'dateRange': instance.dateRange,
     };

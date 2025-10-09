@@ -1,106 +1,97 @@
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SideMenuWidget extends StatelessWidget {
-  const SideMenuWidget({super.key, this.onMenuTap, this.activeIndex = 0});
+  final Function(int)? onPageSelected;
 
-  final Function(int)? onMenuTap;
-  final int activeIndex;
+  const SideMenuWidget({super.key, this.onPageSelected});
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.defaultPadding,
-        AppSpacing.defaultPadding,
-        0,
-        AppSpacing.defaultPadding,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: EdgeInsets.all(width > 1300 ? AppSpacing.defaultPadding : 5),
+      padding: const EdgeInsets.all(AppSpacing.defaultPadding),
+      child: Drawer(
+        elevation: 0,
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(child: Image.asset("assets/images/ayu_logo.png")),
-            DrawerListTile(
-              title: "Analytics",
-              svgSrc: "assets/icons/icon_analytics.svg",
-              press: () => onMenuTap?.call(0),
-              isActive: activeIndex == 0,
+            DrawerHeader(
+              decoration: const BoxDecoration(color: AppColors.white),
+              child: Center(
+                child: Image.asset(
+                  'assets/images/ayu_logo.png',
+                  width: 100,
+                  height: 100,
+                ),
+              ),
             ),
-            DrawerListTile(
-              title: "Users",
-              svgSrc: "assets/icons/icon_persons.svg",
-              press: () => onMenuTap?.call(1),
-              isActive: activeIndex == 1,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_analytics.svg',
+              title: 'Аналитика',
+              onTap: () => _selectPage(context, 0),
             ),
-            DrawerListTile(
-              title: "Report",
-              svgSrc: "assets/icons/icon_reports.svg",
-              press: () => onMenuTap?.call(2),
-              isActive: activeIndex == 2,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_person.svg',
+              title: 'Пользователи',
+              onTap: () => _selectPage(context, 1),
             ),
-            DrawerListTile(
-              title: "Acounting",
-              svgSrc: "assets/icons/icon_acounting.svg",
-              press: () => onMenuTap?.call(3),
-              isActive: activeIndex == 3,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_reports.svg',
+              title: 'Отчеты',
+              onTap: () => _selectPage(context, 2),
             ),
-            DrawerListTile(
-              title: "Avar",
-              svgSrc: "assets/icons/icon_avar.svg",
-              press: () => onMenuTap?.call(4),
-              isActive: activeIndex == 4,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_accounting.svg',
+              title: 'Бухгалтерия',
+              onTap: () => _selectPage(context, 3),
             ),
-            DrawerListTile(
-              title: "Profile",
-              svgSrc: "assets/icons/icon_person.svg",
-              press: () => onMenuTap?.call(5),
-              isActive: activeIndex == 5,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_avar.svg',
+              title: 'Аварийный комиссар',
+              onTap: () => _selectPage(context, 4),
             ),
-            DrawerListTile(
-              title: "Exit",
-              svgSrc: "assets/icons/icon_exit.svg",
-              press: () => _logOut,
-              isActive: false,
+            _buildMenuItem(
+              context,
+              icon: 'assets/icons/icon_person.svg',
+              title: 'Профиль',
+              onTap: () => _selectPage(context, 5),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-void _logOut() {}
-
-class DrawerListTile extends StatelessWidget {
-  const DrawerListTile({
-    super.key,
-    required this.title,
-    required this.svgSrc,
-    required this.press,
-    this.isActive = false,
-  });
-
-  final String title, svgSrc;
-  final VoidCallback press;
-  final bool isActive;
-
-  @override
-  Widget build(BuildContext context) {
-    final textColor = isActive ? AppColors.primary : AppColors.grey;
-    final iconColor = isActive ? AppColors.primary : AppColors.grey;
-
+  Widget _buildMenuItem(
+    BuildContext context, {
+    required String icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return ListTile(
-      onTap: press,
-      horizontalTitleGap: 15.0,
-      leading: SvgPicture.asset(svgSrc, color: iconColor, height: 16),
-      title: Text(title, style: TextStyle(color: textColor)),
+      leading: SvgPicture.asset(
+        icon,
+        width: 24,
+        height: 24,
+        colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),
+      ),
+      title: Text(title),
+      onTap: onTap,
     );
+  }
+
+  void _selectPage(BuildContext context, int index) {
+    Navigator.pop(context);
+    if (onPageSelected != null) {
+      onPageSelected!(index);
+    }
   }
 }

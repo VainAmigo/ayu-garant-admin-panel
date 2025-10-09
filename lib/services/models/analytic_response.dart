@@ -1,10 +1,10 @@
-import 'package:ayu_admin_panel/services/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ayu_admin_panel/services/services.dart';
 
 part 'analytic_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 @immutable
 final class AnalyticResponse {
   const AnalyticResponse({
@@ -15,7 +15,8 @@ final class AnalyticResponse {
     required this.policyTypes,
   });
 
-  factory AnalyticResponse.fromJson(Map<String, dynamic> json) => _$AnalyticResponseFromJson(json);
+  factory AnalyticResponse.fromJson(Map<String, dynamic> json) =>
+      _$AnalyticResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$AnalyticResponseToJson(this);
 
@@ -25,7 +26,7 @@ final class AnalyticResponse {
   final FinancialDataResponse financialData;
   final PolicyTypesResponse policyTypes;
 
-  AnalyticEntity toEntiy() {
+  AnalyticEntity toEntity() {
     return AnalyticEntity(
       platformType: platformType.toEntity(),
       totalPolicies: totalPolicies,
@@ -40,21 +41,20 @@ final class AnalyticResponse {
 @immutable
 final class PlatformTypeResponse {
   const PlatformTypeResponse({
-    required this.android,
-    required this.ios,
+    this.android,
+    this.ios,
   });
 
-  factory PlatformTypeResponse.fromJson(Map<String, dynamic> json) => _$PlatformTypeResponseFromJson(json);
+  factory PlatformTypeResponse.fromJson(Map<String, dynamic> json) =>
+      _$PlatformTypeResponseFromJson(json);
+
   Map<String, dynamic> toJson() => _$PlatformTypeResponseToJson(this);
 
   final int? android;
   final int? ios;
 
   PlatformTypeEntity toEntity() {
-    return PlatformTypeEntity(
-      android: android,
-      ios: ios,
-    );
+    return PlatformTypeEntity(android: android, ios: ios);
   }
 }
 
@@ -68,7 +68,9 @@ final class FinancialDataResponse {
     required this.accruedBonuses,
   });
 
-  factory FinancialDataResponse.fromJson(Map<String, dynamic> json) => _$FinancialDataResponseFromJson(json);
+  factory FinancialDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$FinancialDataResponseFromJson(json);
+
   Map<String, dynamic> toJson() => _$FinancialDataResponseToJson(this);
 
   final double totalPremiumSum;
@@ -96,7 +98,9 @@ final class PolicyTypesResponse {
     required this.dsago,
   });
 
-  factory PolicyTypesResponse.fromJson(Map<String, dynamic> json) => _$PolicyTypesResponseFromJson(json);
+  factory PolicyTypesResponse.fromJson(Map<String, dynamic> json) =>
+      _$PolicyTypesResponseFromJson(json);
+
   Map<String, dynamic> toJson() => _$PolicyTypesResponseToJson(this);
 
   final int osago;
@@ -110,6 +114,36 @@ final class PolicyTypesResponse {
       kasko: kasko,
       kaskoMini: kaskoMini,
       dsago: dsago,
+    );
+  }
+}
+
+@JsonSerializable()
+@immutable
+final class AnalyticBody {
+  const AnalyticBody({
+    this.platformType,
+    this.startDate,
+    this.endDate,
+    this.dateRange,
+  });
+
+  factory AnalyticBody.fromJson(Map<String, dynamic> json) =>
+      _$AnalyticBodyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AnalyticBodyToJson(this);
+
+  final String? platformType;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String? dateRange;
+
+  AnalyticParam toParam() {
+    return AnalyticParam(
+      platformType: platformType,
+      startDate: startDate,
+      endDate: endDate,
+      dateRange: dateRange,
     );
   }
 }

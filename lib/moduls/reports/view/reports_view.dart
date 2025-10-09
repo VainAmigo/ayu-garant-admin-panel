@@ -1,4 +1,3 @@
-import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class _ReportsViewState extends State<ReportsView> {
             spacing: AppSpacing.defaultPadding,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(title: "Отчеты"),
               ReportsTabsWidget(
                 selectedReport: _selectedReport,
                 onReportSelected: _selectReport,

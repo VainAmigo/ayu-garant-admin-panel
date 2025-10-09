@@ -31,7 +31,6 @@ class _AnalyticViewState extends State<AnalyticView> {
             spacing: AppSpacing.defaultPadding,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(title: "Аналитика"),
               AnalyticFilter(onApplyFilter: () => _onApplyFilter(context)),
               BlocBuilder<AnalyticBloc, AnalyticState>(
                 builder: (context, state) {
