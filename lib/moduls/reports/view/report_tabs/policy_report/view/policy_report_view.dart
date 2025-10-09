@@ -4,7 +4,6 @@ import 'package:ayu_admin_panel/services/services.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class PolicyReportView extends StatefulWidget {
   const PolicyReportView({super.key});
@@ -14,7 +13,7 @@ class PolicyReportView extends StatefulWidget {
 }
 
 class _PolicyReportViewState extends State<PolicyReportView> {
-  final PolicyReportParam _defaultParams = PolicyReportParam(isActive: null);
+  final PolicyReportParam _defaultParams = PolicyReportParam(dateRange: PeriodFilter.day.name);
 
   @override
   void initState() {
@@ -25,7 +24,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
   String? _selectedPolicyType;
   DateTime? _startDate;
   DateTime? _endDate;
-  bool? _isActive;
+  PeriodFilter _selectedPeriod = PeriodFilter.day;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
               _startDate,
               _endDate,
               _selectedPolicyType,
-              _isActive,
+              _selectedPeriod,
             ),
             onFiltersReset: _resetFilters,
             filtersList: _buildFilterWidgets(),
@@ -83,12 +82,19 @@ class _PolicyReportViewState extends State<PolicyReportView> {
       _selectedPolicyType = null;
       _startDate = null;
       _endDate = null;
-      _isActive = null;
     });
   }
 
   List<Widget> _buildFilterWidgets() {
     return [
+      DotTagFilter(
+        initialPeriod: _selectedPeriod,
+        onPeriodChanged: (PeriodFilter period) {
+          setState(() {
+            _selectedPeriod = period;
+          });
+        },
+      ),
       CustomDropDown<String>(
         value: _selectedPolicyType,
         onChanged: _onPolicyTypeChanged,
@@ -110,13 +116,13 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     DateTime? startDate,
     DateTime? endDate,
     String? policyType,
-    bool? isActive,
+    PeriodFilter? period,
   ) {
     final PolicyReportParam filters = PolicyReportParam(
       startDate: startDate,
       endDate: endDate,
       policyType: policyType,
-      isActive: isActive,
+      dateRange: period?.name,
     );
     final bloc = context.read<PolicyReportCubit>();
 
@@ -124,13 +130,13 @@ class _PolicyReportViewState extends State<PolicyReportView> {
       startDate: filters.startDate,
       endDate: filters.endDate,
       policyType: filters.policyType,
-      isActive: filters.isActive,
+      dateRange: filters.dateRange,
     );
 
     print('param: $startDate');
     print('param: $endDate');
     print('param: $policyType');
-    print('param: $isActive');
+    print('param: $period');
 
     bloc.getPolicyReport(param: param);
   }

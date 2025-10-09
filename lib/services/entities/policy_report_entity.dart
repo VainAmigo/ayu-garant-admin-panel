@@ -26,10 +26,6 @@ final class PolicyReportEntity {
   final String brand;
   final String policyHolderName;
   final PolicyStatus policyStatus;
-
-  bool get isActive {
-    return policyStatus == PolicyStatus.active;
-  }
 }
 
 final class PolicyReportParam {
@@ -38,22 +34,19 @@ final class PolicyReportParam {
     this.endDate,
     this.policyType,
     this.dateRange,
-    this.isActive,
   });
 
   final DateTime? startDate;
   final DateTime? endDate;
   final String? policyType;
   final String? dateRange;
-  final bool? isActive;
 
   PolicyReportParam toBody() {
     return PolicyReportParam(
       startDate: startDate,
       endDate: endDate,
       policyType: policyType,
-      dateRange: dateRange,
-      isActive: isActive,
+      dateRange: dateRange
     );
   }
 
@@ -63,7 +56,6 @@ final class PolicyReportParam {
       'endDate': endDate?.toIso8601String(),
       'policyType': policyType,
       'dateRange': dateRange,
-      'isActive': isActive,
     };
   }
 }
