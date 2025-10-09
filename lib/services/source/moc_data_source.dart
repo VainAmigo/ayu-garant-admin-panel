@@ -33,7 +33,7 @@ final class MocDataSource implements DataSource {
   Future<List<PolicyReportResponse>> getPolicyReport(PolicyReportParam param) async {
     final data = [
       {
-        'policyNumber': 'POL-001-2024',
+        'policyNumber': 'AGIMP0001234',
         'creationDate': '2024-01-15T10:30:00Z',
         'startDate': '2024-01-16T00:00:00Z',
         'endDate': '2025-01-15T23:59:59Z',
@@ -133,7 +133,7 @@ final class MocDataSource implements DataSource {
         'creationDate': '2024-03-05T09:15:00Z',
         'startDate': '2024-03-06T00:00:00Z',
         'endDate': '2024-12-05T23:59:59Z',
-        'policyType': 'OSAGO askld fj;alsk jdf;la kjsdf;lk jasd;l kfja;slkd jfpqoweij fpaoksdjf ;lkajsd;f lkajsd fo;ijw lkfjalks jd',
+        'policyType': 'OSAGO',
         'policyCost': 12000.0,
         'model': 'Lada Vesta',
         'brand': 'Lada',

@@ -1,3 +1,4 @@
+import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +7,12 @@ class TableColumn<T> {
   final String title;
   final String Function(T item) dataExtractor;
   final double? width;
-  final TextAlign alignment;
   final Widget Function(T item)? customBuilder;
 
   const TableColumn({
     required this.title,
     required this.dataExtractor,
     this.width,
-    this.alignment = TextAlign.left,
     this.customBuilder,
   });
 }
@@ -32,6 +31,7 @@ class CustomTable<T> extends StatelessWidget {
   final BoxBorder? border;
   final bool enableHorizontalScroll;
   final double? minWidth;
+  final Function()? onExport;
 
   const CustomTable({
     super.key,
@@ -47,17 +47,18 @@ class CustomTable<T> extends StatelessWidget {
     this.border,
     this.enableHorizontalScroll = true,
     this.minWidth,
+    this.onExport,
   });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     // Рассчитываем минимальную ширину таблицы
     final calculatedMinWidth = minWidth ?? _calculateMinWidth();
-    
+
     Widget tableWidget = _buildTable();
-    
+
     // Если включен горизонтальный скролл и таблица шире экрана
     if (enableHorizontalScroll && calculatedMinWidth > screenWidth) {
       final scrollController = ScrollController();
@@ -68,14 +69,11 @@ class CustomTable<T> extends StatelessWidget {
         child: SingleChildScrollView(
           controller: scrollController,
           scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: calculatedMinWidth,
-            child: tableWidget,
-          ),
+          child: SizedBox(width: calculatedMinWidth, child: tableWidget),
         ),
       );
     }
-    
+
     return Container(
       height: height, // Если height не задан, контейнер адаптируется к контенту
       padding: padding ?? const EdgeInsets.all(16),
@@ -84,17 +82,30 @@ class CustomTable<T> extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.circular(8),
         border: border ?? Border.all(color: AppColors.grey100),
       ),
-      child: tableWidget,
+      child: Column(
+        spacing: AppSpacing.defaultPadding,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          screenWidth > 550
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [..._buildActionWidgets()],
+                )
+              : Column(
+                spacing: 10,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [..._buildActionWidgets()],
+              ),
+          tableWidget,
+        ],
+      ),
     );
   }
 
   Widget _buildTable() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (showHeader) _buildHeader(),
-        _buildBody(),
-      ],
+      children: [if (showHeader) _buildHeader(), _buildBody()],
     );
   }
 
@@ -109,6 +120,7 @@ class CustomTable<T> extends StatelessWidget {
         ),
       ),
       child: Row(
+        spacing: AppSpacing.defaultPadding,
         children: columns.map((column) {
           return Expanded(
             flex: column.width != null ? 0 : 1,
@@ -116,8 +128,12 @@ class CustomTable<T> extends StatelessWidget {
               width: column.width,
               child: Text(
                 column.title,
-                style: AppTypography.grey16w500,
-                textAlign: column.alignment,
+                style: AppTypography.grey16w500.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
+                textAlign: TextAlign.left,
               ),
             ),
           );
@@ -131,10 +147,7 @@ class CustomTable<T> extends StatelessWidget {
       return const Center(
         child: Text(
           'Нет данных для отображения',
-          style: TextStyle(
-            color: AppColors.grey,
-            fontSize: 16,
-          ),
+          style: TextStyle(color: AppColors.grey, fontSize: 16),
         ),
       );
     }
@@ -143,42 +156,57 @@ class CustomTable<T> extends StatelessWidget {
       children: List.generate(data.length, (index) {
         final item = data[index];
         final isEven = index % 2 == 0;
-        
+
         return Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              color: isEven 
-                ? (alternateRowBackgroundColor ?? AppColors.white)
-                : (rowBackgroundColor ?? AppColors.grey100),
+              color: isEven
+                  ? (alternateRowBackgroundColor ?? AppColors.white)
+                  : (rowBackgroundColor ?? AppColors.grey100),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: AppSpacing.defaultPadding,
                 children: columns.map((column) {
                   return Expanded(
                     flex: column.width != null ? 0 : 1,
                     child: SizedBox(
                       width: column.width,
                       child: column.customBuilder != null
-                        ? column.customBuilder!(item)
-                        : Text(
-                            column.dataExtractor(item),
-                            style: AppTypography.grey14w500.copyWith(
-                              fontSize: 12,
+                          ? column.customBuilder!(item)
+                          : Text(
+                              column.dataExtractor(item),
+                              style: AppTypography.grey14w500.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: column.alignment,
-                          ),
                     ),
                   );
                 }).toList(),
               ),
             ),
-            if (index < data.length - 1) const Divider(
-              height: 1,
-              color: AppColors.grey100,
-            ),
+            if (index < data.length - 1)
+              const Divider(height: 1, color: AppColors.grey100),
           ],
         );
       }),
     );
+  }
+
+  List<Widget> _buildActionWidgets() {
+    return [
+      Text(
+        'Найденные записи: ${data.length}',
+        style: AppTypography.black20w400,
+      ),
+      PrimaryButton(
+        text: 'Экспортировать в Excel',
+        onPressed: onExport ?? () {},
+        icon: Icons.download,
+      ),
+    ];
   }
 
   double _calculateMinWidth() {
@@ -192,72 +220,5 @@ class CustomTable<T> extends StatelessWidget {
       }
     }
     return totalWidth;
-  }
-}
-
-/// Виджет для отображения статуса с цветным индикатором
-class StatusChip extends StatelessWidget {
-  final String status;
-  final Color? backgroundColor;
-  final Color? textColor;
-
-  const StatusChip({
-    super.key,
-    required this.status,
-    this.backgroundColor,
-    this.textColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor = backgroundColor ?? _getStatusColor(status);
-    Color txtColor = textColor ?? AppColors.white;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        status,
-        style: AppTypography.white14w500.copyWith(color: txtColor),
-      ),
-    );
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'активный':
-        return AppColors.green;
-      case 'неактивный':
-        return AppColors.oragne;
-      case 'заблокирован':
-        return AppColors.red;
-      default:
-        return AppColors.grey;
-    }
-  }
-}
-
-/// Виджет для отображения суммы с валютой
-class AmountWidget extends StatelessWidget {
-  final double amount;
-  final String currency;
-  final TextStyle? style;
-
-  const AmountWidget({
-    super.key,
-    required this.amount,
-    this.currency = 'c',
-    this.style,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '${amount.toStringAsFixed(2)} $currency',
-      style: style ?? AppTypography.black20w400.copyWith(fontSize: 14),
-    );
   }
 }
