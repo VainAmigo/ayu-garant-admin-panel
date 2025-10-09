@@ -23,18 +23,21 @@ class ReportsTabsWidget extends StatelessWidget {
         childAspectRatio: size.width < 610 ? 1.2 : 2.5,
         selectedReport: selectedReport,
         onReportSelected: onReportSelected,
+        iconSize: size.width > 420 ? 50 : 40,
       ),
       tablet: ReportsTabsGridView(
         crossAxisCount: 4,
         childAspectRatio: size.width < 900 ? 1.2 : 1.5,
         selectedReport: selectedReport,
         onReportSelected: onReportSelected,
+        iconSize: 50,
       ),
       desktop: ReportsTabsGridView(
         crossAxisCount: 4,
-        childAspectRatio: size.width > 1300 ? 1.9 : 1.5,
+        childAspectRatio: size.width > 1300 ? 2 : 1.5,
         selectedReport: selectedReport,
         onReportSelected: onReportSelected,
+        iconSize: size.width > 1380 ? 100 : 80,
       ),
     );
   }
@@ -47,12 +50,14 @@ class ReportsTabsGridView extends StatelessWidget {
     this.childAspectRatio = 1.4,
     required this.selectedReport,
     required this.onReportSelected,
+    this.iconSize,
   });
 
   final int crossAxisCount;
   final double childAspectRatio;
   final ReportType selectedReport;
   final Function(ReportType) onReportSelected;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +76,7 @@ class ReportsTabsGridView extends StatelessWidget {
           icon: reportType.icon,
           isActive: selectedReport == reportType,
           onTap: () => onReportSelected(reportType),
+          iconSize: iconSize,
         );
       }).toList(),
     );

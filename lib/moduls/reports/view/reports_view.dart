@@ -45,7 +45,7 @@ class _ReportsViewState extends State<ReportsView> {
       case ReportType.policies:
         return PolicyReportView();
       case ReportType.users:
-        return UserReportView();
+        return UsersReportView();
       case ReportType.emergencyCommissioner:
         return EmergencyComReportView();
       case ReportType.accounting:

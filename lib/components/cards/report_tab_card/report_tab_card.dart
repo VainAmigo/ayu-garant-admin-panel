@@ -8,13 +8,15 @@ class ReportTabCard extends StatelessWidget {
     required this.icon,
     required this.isActive,
     required this.onTap,
+    this.iconSize = 100,
   });
 
   final String title;
   final IconData icon;
   final bool isActive;
   final Function() onTap;
-  
+  final double? iconSize;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -31,7 +33,7 @@ class ReportTabCard extends StatelessWidget {
             Icon(
               icon,
               color: isActive ? AppColors.white : AppColors.grey,
-              size: 48,
+              size: iconSize,
             ),
             Spacer(),
             Text(

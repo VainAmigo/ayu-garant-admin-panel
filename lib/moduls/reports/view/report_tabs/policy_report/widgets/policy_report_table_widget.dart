@@ -1,4 +1,5 @@
 import 'package:ayu_admin_panel/components/components.dart';
+import 'package:ayu_admin_panel/config/config.dart';
 import 'package:ayu_admin_panel/core/core.dart';
 import 'package:ayu_admin_panel/services/services.dart';
 import 'package:flutter/material.dart';
@@ -15,38 +16,38 @@ class PolicyReportTableWidget extends StatelessWidget {
       TableColumn<ReportEntity>(
         title: 'номер полиса',
         dataExtractor: (item) => item.policyNumber ?? '',
-        width: 100,
+        width: TableConfig.policyNumberWidth,
       ),
       TableColumn<ReportEntity>(
         title: 'дата оформления',
         dataExtractor: (item) => item.creationDate?.formatted ?? '',
-        width: 80,
+        width: TableConfig.dateWidth,
       ),
       TableColumn<ReportEntity>(
         title: 'период действия',
         dataExtractor: (item) =>
             '${item.startDate?.formatted} - ${item.endDate?.formatted}',
-        width: 150,
+        width: TableConfig.periodWidth,
       ),
       TableColumn<ReportEntity>(
         title: 'сумма',
         dataExtractor: (item) => '${item.policyCost?.toString()} c',
-        width: 70,
+        width: TableConfig.costWidth70,
       ),
       TableColumn<ReportEntity>(
         title: 'тип полиса',
         dataExtractor: (item) => getTranslatePolicyType(item.policyType ?? ''),
-        width: 80,
+        width: TableConfig.policyTypeWidth,
       ),
       TableColumn<ReportEntity>(
         title: 'автомобиль',
         dataExtractor: (item) => '${item.carBrand} ${item.carModel}',
-        width: 200,
+        width: TableConfig.carWidth,
       ),
       TableColumn<ReportEntity>(
         title: 'владелец',
         dataExtractor: (item) => item.policyHolderName ?? '',
-        width: 200,
+        width: TableConfig.nameWidth,
       ),
     ];
 

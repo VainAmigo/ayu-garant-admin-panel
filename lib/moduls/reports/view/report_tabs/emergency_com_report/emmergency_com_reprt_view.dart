@@ -1,3 +1,4 @@
+import 'package:ayu_admin_panel/components/components.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyComReportView extends StatelessWidget {
@@ -5,6 +6,6 @@ class EmergencyComReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Text('Emergency Com Report')],);
+    return const EmtyContainer();
   }
 }

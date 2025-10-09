@@ -92,10 +92,10 @@ class CustomTable<T> extends StatelessWidget {
                   children: [..._buildActionWidgets()],
                 )
               : Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [..._buildActionWidgets()],
-              ),
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [..._buildActionWidgets()],
+                ),
           tableWidget,
         ],
       ),
@@ -144,12 +144,7 @@ class CustomTable<T> extends StatelessWidget {
 
   Widget _buildBody() {
     if (data.isEmpty) {
-      return const Center(
-        child: Text(
-          'Нет данных для отображения',
-          style: TextStyle(color: AppColors.grey, fontSize: 16),
-        ),
-      );
+      return EmtyContainer();
     }
 
     return Column(
@@ -215,7 +210,6 @@ class CustomTable<T> extends StatelessWidget {
       if (column.width != null) {
         totalWidth += column.width!;
       } else {
-        // Минимальная ширина для колонки без фиксированной ширины
         totalWidth += 120;
       }
     }
