@@ -20,7 +20,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
   @override
   void initState() {
     super.initState();
-    context.read<PolicyReportCubit>().getPolicyReport(param: _defaultParams);
+    context.read<ReportCubit>().getReport(param: _defaultParams);
   }
 
   String? _selectedPolicyType;
@@ -46,16 +46,16 @@ class _PolicyReportViewState extends State<PolicyReportView> {
             onFiltersReset: _resetFilters,
             filtersList: _buildFilterWidgets(),
           ),
-          BlocBuilder<PolicyReportCubit, PolicyReportState>(
+          BlocBuilder<ReportCubit, ReportState>(
             builder: (context, state) {
               return switch (state) {
-                PolicyReportInitial() => const CenteredIndicator(),
-                PolicyReportLoading() => const CenteredIndicator(),
-                PolicyReportSuccess() => PolicyReportTableWidget(
+                ReportInitial() => const CenteredIndicator(),
+                ReportLoading() => const CenteredIndicator(),
+                ReportSuccess() => PolicyReportTableWidget(
                   data: state.entity,
                   onExport: _onExport,
                 ),
-                PolicyReportError() => Center(
+                ReportError() => Center(
                   child: Text('Ошибка загрузки данных: ${state.error}'),
                 ),
               };
@@ -126,7 +126,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
       policyType: policyType,
       dateRange: period?.name,
     );
-    final bloc = context.read<PolicyReportCubit>();
+    final bloc = context.read<ReportCubit>();
 
     final param = ReportParam(
       startDate: filters.startDate,
@@ -140,6 +140,6 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     log('param: $policyType');
     log('param: $period');
 
-    bloc.getPolicyReport(param: param);
+    bloc.getReport(param: param);
   }
 }

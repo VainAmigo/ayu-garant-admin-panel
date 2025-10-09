@@ -26,7 +26,7 @@ class _AccountingReportViewState extends State<AccountingReportView> {
   @override
   void initState() {
     super.initState();
-    context.read<AccountingCubit>().getAccountingReport(param: _defaultParams);
+    context.read<ReportCubit>().getReport(param: _defaultParams);
   }
 
   @override
@@ -41,15 +41,15 @@ class _AccountingReportViewState extends State<AccountingReportView> {
             onFiltersReset: () => _resetFilters(),
             filtersList: _buildFilterWidgets(),
           ),
-          BlocBuilder<AccountingCubit, AccountingState>(
+          BlocBuilder<ReportCubit, ReportState>(
             builder: (context, state) {
               return switch (state) {
-                AccountingInitial() => const CenteredIndicator(),
-                AccountingLoading() => const CenteredIndicator(),
-                AccountingSuccess() => AccountingReportTableWidget(
+                ReportInitial() => const CenteredIndicator(),
+                ReportLoading() => const CenteredIndicator(),
+                ReportSuccess() => AccountingReportTableWidget(
                   data: state.entity,
                 ),
-                AccountingError() => Center(
+                ReportError() => Center(
                   child: Text('Ошибка загрузки данных: ${state.error}'),
                 ),
               };
@@ -125,7 +125,7 @@ class _AccountingReportViewState extends State<AccountingReportView> {
   }
 
   void _onApplyFilter(BuildContext context) {
-    final bloc = context.read<AccountingCubit>();
+    final bloc = context.read<ReportCubit>();
     final param = ReportParam(
       startDate: _startDate,
       endDate: _endDate,
@@ -141,6 +141,6 @@ class _AccountingReportViewState extends State<AccountingReportView> {
     log('param: ${_selectedPeriod}');
     log('param: ${_selectedPaymentSystem}');
 
-    bloc.getAccountingReport(param: param);
+    bloc.getReport(param: param);
   }
 }

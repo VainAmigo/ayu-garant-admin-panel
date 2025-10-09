@@ -5,24 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-part 'accounting_state.dart';
+part 'report_state.dart';
 
-class AccountingCubit extends Cubit<AccountingState> {
-  AccountingCubit(this.repository) : super(const AccountingInitial());
+class ReportCubit extends Cubit<ReportState> {
+  ReportCubit(this.repository) : super(const ReportInitial());
 
   final Repository repository;
 
-  Future<void> getAccountingReport({
+  Future<void> getReport({
     required ReportParam param,
   }) async {
     try {
-      if (state is AccountingLoading) return;
-      emit(const AccountingLoading());
+      if (state is ReportLoading) return;
+      emit(const ReportLoading());
       final data = await repository.getReport(param);
-      emit(AccountingSuccess(data));
+      emit(ReportSuccess(data));
     } catch (e, s) {
       log('Policy report Error: $e\n$s');
-      emit(AccountingError(e));
+      emit(ReportError(e));
     }
   }
 }

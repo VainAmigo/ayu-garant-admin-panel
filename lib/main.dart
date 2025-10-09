@@ -41,12 +41,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => PolicyReportCubit(
-            context.read<Repository>()
-          ),
-        ),
-        BlocProvider(
-          create: (context) => AccountingCubit(
+          create: (context) => ReportCubit(
             context.read<Repository>()
           ),
         ),
