@@ -10,7 +10,7 @@ class AppMainView extends StatefulWidget {
 }
 
 class _AppMainViewState extends State<AppMainView> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,10 @@ class _AppMainViewState extends State<AppMainView> {
         },
       ),
       appBar: AppBar(
+        elevation: 0,
         title: const Text("AYU Admin Panel"),
-        centerTitle: true,
+        centerTitle: false,
+        actionsPadding: EdgeInsets.symmetric(horizontal: AppSpacing.defaultPadding,),
         actions: [
           IconButton(
             onPressed: () {},

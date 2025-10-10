@@ -20,4 +20,11 @@ final class RepositoryImpl implements Repository {
     // final data = await dataSource.getReport(param);
     return data.map((e) => e.toEntity()).toList();
   }
+
+  @override
+  Future<List<UsersReportEntity>> getUsers(UsersReportParam param) async {
+    final data = await const MocDataSource().getUsers(param);
+    // final data = await dataSource.getUsers(param);
+    return data.map((e) => e.toEntity()).toList();
+  }
 }

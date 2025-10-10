@@ -33,4 +33,20 @@ final class RemoteDataSource implements DataSource {
           .toList(),
     );
   }
+  
+  @override
+  Future<List<UsersReportResponse>> getUsers(UsersReportParam param) async {
+    final response = await client.post<List<dynamic>>(
+      '/reports/users',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold(
+      (l) => throw l,
+      (r) => r.map(
+        (e) => UsersReportResponse.fromJson(e as Map<String, dynamic>),
+      )
+      .toList(),
+    );
+  }
 }

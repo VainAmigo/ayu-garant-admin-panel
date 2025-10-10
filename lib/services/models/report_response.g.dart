@@ -19,7 +19,10 @@ ReportResponse _$ReportResponseFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['endDate'] as String),
       policyType: json['policyType'] as String?,
-      policyStatus: $enumDecodeNullable(_$PolicyStatusEnumMap, json['policyStatus']),
+      policyStatus: $enumDecodeNullable(
+        _$PolicyStatusEnumMap,
+        json['policyStatus'],
+      ),
       policyCost: (json['policyCost'] as num?)?.toDouble(),
       premiumWithoutTax: (json['premiumWithoutTax'] as num?)?.toDouble(),
       usedBonuses: (json['usedBonuses'] as num?)?.toDouble(),
@@ -60,19 +63,24 @@ Map<String, dynamic> _$ReportResponseToJson(ReportResponse instance) =>
       'carNumber': instance.carNumber,
     };
 
-ReportBody _$ReportBodyFromJson(Map<String, dynamic> json) =>
-    ReportBody(
-      startDate: json['startDate'] == null
-          ? null
-          : DateTime.parse(json['startDate'] as String),
-      endDate: json['endDate'] == null
-          ? null
-          : DateTime.parse(json['endDate'] as String),
-      policyType: json['policyType'] as String?,
-      policyStatus: json['policyStatus'] as String?,
-      dateRange: json['dateRange'] as String?,
-      paymentSystem: json['paymentSystem'] as String?,
-    );
+const _$PolicyStatusEnumMap = {
+  PolicyStatus.active: 'ACTIVE',
+  PolicyStatus.unPaid: 'UNPAID',
+  PolicyStatus.expired: 'EXPIRED',
+};
+
+ReportBody _$ReportBodyFromJson(Map<String, dynamic> json) => ReportBody(
+  startDate: json['startDate'] == null
+      ? null
+      : DateTime.parse(json['startDate'] as String),
+  endDate: json['endDate'] == null
+      ? null
+      : DateTime.parse(json['endDate'] as String),
+  policyType: json['policyType'] as String?,
+  policyStatus: json['policyStatus'] as String?,
+  dateRange: json['dateRange'] as String?,
+  paymentSystem: json['paymentSystem'] as String?,
+);
 
 Map<String, dynamic> _$ReportBodyToJson(ReportBody instance) =>
     <String, dynamic>{
@@ -83,9 +91,3 @@ Map<String, dynamic> _$ReportBodyToJson(ReportBody instance) =>
       'dateRange': instance.dateRange,
       'paymentSystem': instance.paymentSystem,
     };
-
-const _$PolicyStatusEnumMap = {
-  PolicyStatus.active: 'ACTIVE',
-  PolicyStatus.unPaid: 'UNPAID',
-  PolicyStatus.expired: 'EXPIRED',
-};

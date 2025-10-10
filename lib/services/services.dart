@@ -2,8 +2,10 @@ export 'entities/analytic_entity.dart';
 export 'models/analytic_response.dart';
 export 'entities/report_entity.dart';
 export 'models/report_response.dart';
-export 'storage/storage.dart';
+export 'entities/users_report_entity.dart';
+export 'models/users_report_response.dart';
 
+export 'storage/storage.dart';
 export 'repository/repository.dart';
 export 'repository/repository_impl.dart';
 export 'source/data_source.dart';

@@ -158,4 +158,83 @@ final class MocDataSource implements DataSource {
     await Future.delayed(const Duration(seconds: 1));
     return data.map((json) => ReportResponse.fromJson(json)).toList();
   }
+
+  @override
+  Future<List<UsersReportResponse>> getUsers(UsersReportParam param) async {
+    final data = [
+      {
+        'id': '1',
+        'name': 'Айдар Абдыраимов',
+        'phoneNumber': '+996 555 123 456',
+        'status': 'ACTIVE',
+        'roles': ['ADMIN', 'USER'],
+      },
+      {
+        'id': '2',
+        'name': 'Айнура Кыдырбекова',
+        'phoneNumber': '+996 555 234 567',
+        'status': 'ACTIVE',
+        'roles': ['USER'],
+      },
+      {
+        'id': '3',
+        'name': 'Бермет Асанова',
+        'phoneNumber': '+996 555 345 678',
+        'status': 'INACTIVE',
+        'roles': ['AVAR_SPECIALIST', 'ACCOUNTANT'],
+      },
+      {
+        'id': '4',
+        'name': 'Данияр Токтогулов',
+        'phoneNumber': '+996 555 456 789',
+        'status': 'ACTIVE',
+        'roles': ['ACCOUNTANT'],
+      },
+      {
+        'id': '5',
+        'name': 'Эльмира Жумалиева',
+        'phoneNumber': '+996 555 567 890',
+        'status': 'ACTIVE',
+        'roles': ['USER', 'AVAR_SPECIALIST'],
+      },
+      {
+        'id': '6',
+        'name': 'Жанар Абдыкадырова',
+        'phoneNumber': '+996 555 678 901',
+        'status': 'INACTIVE',
+        'roles': ['AVAR_SPECIALIST'],
+      },
+      {
+        'id': '7',
+        'name': 'Кубанычбек Асанов',
+        'phoneNumber': '+996 555 789 012',
+        'status': 'ACTIVE',
+        'roles': ['ACCOUNTANT', 'ADMIN'],
+      },
+      {
+        'id': '8',
+        'name': 'Лейла Мамбетова',
+        'phoneNumber': '+996 555 890 123',
+        'status': 'ACTIVE',
+        'roles': ['USER'],
+      },
+      {
+        'id': '9',
+        'name': 'Марат Абдыраимов',
+        'phoneNumber': '+996 555 901 234',
+        'status': 'INACTIVE',
+        'roles': ['ADMIN'],
+      },
+      {
+        'id': '10',
+        'name': 'Нурсулуу Асанова',
+        'phoneNumber': '+996 555 012 345',
+        'status': 'ACTIVE',
+        'roles': ['AVAR_SPECIALIST', 'USER', 'ACCOUNTANT'],
+      },
+    ];
+    
+    await Future.delayed(const Duration(seconds: 1));
+    return data.map((json) => UsersReportResponse.fromJson(json)).toList();
+  }
 }

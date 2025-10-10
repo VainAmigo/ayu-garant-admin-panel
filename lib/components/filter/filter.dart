@@ -63,7 +63,7 @@ class _FilterState extends State<Filter> {
           Responsive.isDesktop(context)
               ? Row(
                   spacing: AppSpacing.defaultPadding,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: widget.filtersList ?? [],
                 )
