@@ -4,30 +4,31 @@ import 'package:ayu_admin_panel/services/services.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class EmergencyDetailWidget extends StatefulWidget {
-  const EmergencyDetailWidget({super.key, required this.avarSearch});
+class EmergancyDraftedDetailWidget extends StatefulWidget {
+  const EmergancyDraftedDetailWidget({super.key, required this.avarSearch});
 
   final AvarSearchEntity avarSearch;
 
   @override
-  State<EmergencyDetailWidget> createState() => _EmergencyDetailWidgetState();
+  State<EmergancyDraftedDetailWidget> createState() =>
+      _EmergancyDraftedDetailWidgetState();
 }
 
-class _EmergencyDetailWidgetState extends State<EmergencyDetailWidget> {
-  String? selectedCulprit;
-  TextEditingController accidentCostController = TextEditingController();
-  DateTime? accidentDate;
+class _EmergancyDraftedDetailWidgetState
+    extends State<EmergancyDraftedDetailWidget> {
+  TextEditingController paymentAmountController = TextEditingController();
   bool _isFormValid = false;
+  DateTime? paymentDate;
 
   @override
   void initState() {
     super.initState();
-    accidentCostController.addListener(_checkFormValidity);
+    paymentAmountController.addListener(_checkFormValidity);
   }
 
   @override
   void dispose() {
-    accidentCostController.dispose();
+    paymentAmountController.dispose();
     super.dispose();
   }
 
@@ -54,14 +55,8 @@ class _EmergencyDetailWidgetState extends State<EmergencyDetailWidget> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _textTitle(
-              'Номер полиса: ',
-              widget.avarSearch.policyNumber ?? '',
-            ),
-            _textTitle(
-              'ФИО владельца: ',
-              widget.avarSearch.holderName ?? '',
-            ),
+            _textTitle('Номер полиса: ', widget.avarSearch.policyNumber ?? ''),
+            _textTitle('ФИО владельца: ', widget.avarSearch.holderName ?? ''),
             _textTitle(
               'ПИН владельца: ',
               widget.avarSearch.holderPin?.toString() ?? '',
@@ -72,77 +67,61 @@ class _EmergencyDetailWidgetState extends State<EmergencyDetailWidget> {
             ),
             const Divider(color: AppColors.grey),
             _textTitle('Гос. номер: ', widget.avarSearch.carNumber ?? ''),
-            _textTitle(
-              'Модель автомобиля: ',
-              widget.avarSearch.carModel ?? '',
-            ),
-            _textTitle(
-              'Марка автомобиля: ',
-              widget.avarSearch.carBrand ?? '',
-            ),
+            _textTitle('Модель автомобиля: ', widget.avarSearch.carModel ?? ''),
+            _textTitle('Марка автомобиля: ', widget.avarSearch.carBrand ?? ''),
             _textTitle('Вин номер: ', widget.avarSearch.vinNumber ?? ''),
             _textTitle('VID номер: ', widget.avarSearch.vidNumber ?? ''),
             const Divider(color: AppColors.grey),
-            _widgetTitle(
+            _textTitle('Номер РЗНУ: ', widget.avarSearch.registrationId ?? ''),
+            _textTitle(
               'Дата аварии: ',
+              widget.avarSearch.accidentDate?.formatted ?? '',
+            ),
+            _textTitle(
+              'ПИН виновника: ',
+              widget.avarSearch.culpritPin?.toString() ?? '',
+            ),
+            _textTitle('ФИО виновника:', widget.avarSearch.culpritName ?? ''),
+            const Divider(color: AppColors.grey),
+            _textTitle(
+              'Предварительная сумма',
+              widget.avarSearch.accidentCost?.toString() ?? '',
+            ),
+            const Divider(color: AppColors.grey),
+            _widgetTitle(
+              'Дата выплаты: ',
               DatePicker(
                 hintText: 'Выберите дату',
-                initialDate: accidentDate,
                 onDateChanged: (date) {
                   setState(() {
-                    accidentDate = date;
+                    paymentDate = date;
                   });
                   _checkFormValidity();
                 },
                 onReset: () {
                   setState(() {
-                    accidentDate = null;
+                    paymentDate = null;
                   });
                   _checkFormValidity();
                 },
               ),
             ),
             _widgetTitle(
-              'Виновник аварии: ',
-              CustomDropDown<String>(
-                hintText: 'Выберите виновника',
-                value: selectedCulprit,
-                items: (widget.avarSearch.availableDriversPins ?? [])
-                    .map<DropdownItem<String>>(
-                      (pin) => DropdownItem(
-                        value: pin.toString(),
-                        label: pin.toString(),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCulprit = value;
-                  });
-                  _checkFormValidity();
-                },
-              ),
-            ),
-            const Divider(color: AppColors.grey),
-            _widgetTitle(
-              'Предварительная сумма',
+              'Сумма к выплате: ',
               CustomTextField(
                 hintText: 'Введите сумму',
-                controller: accidentCostController,
+                controller: paymentAmountController,
               ),
             ),
-                  
+
             const SizedBox(height: 50),
-                  
+
             Row(
               children: [
-                Text(
-                  'Потдвердить данные',
-                  style: AppTypography.grey16w500,
-                ),
+                Text('Потдвердить данные', style: AppTypography.grey16w500),
                 const Spacer(),
                 PrimaryButton(
-                  text: 'Отправить', 
+                  text: 'Отправить',
                   onPressed: _isFormValid ? _onSend : null,
                 ),
               ],
@@ -154,17 +133,13 @@ class _EmergencyDetailWidgetState extends State<EmergencyDetailWidget> {
   }
 
   void _onSend() {
-    print(accidentDate);
-    print(selectedCulprit);
-    print(accidentCostController.text);
+    print(paymentAmountController.text);
   }
 
   void _checkFormValidity() {
-    final isValid = accidentDate != null && 
-                   selectedCulprit != null && 
-                   selectedCulprit!.isNotEmpty &&
-                   accidentCostController.text.isNotEmpty;
-    
+    final isValid =
+        paymentAmountController.text.isNotEmpty && paymentDate != null;
+
     if (_isFormValid != isValid) {
       setState(() {
         _isFormValid = isValid;

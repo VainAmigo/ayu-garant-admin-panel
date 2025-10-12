@@ -15,7 +15,6 @@ class EmergencyRegisterTab extends StatefulWidget {
 
 class _EmergencyRegisterTabState extends State<EmergencyRegisterTab> {
 
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _policyNumberController = TextEditingController();
 
   @override
@@ -59,7 +58,7 @@ class _EmergencyRegisterTabState extends State<EmergencyRegisterTab> {
         content: SizedBox(
           width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width * 0.4 : MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.8,
-          child: EmergencyDetailWidget(avarSearch: avarSearch),
+          child: EmergencyRegisterDetailWidget(avarSearch: avarSearch),
         ),
       ),
     );
@@ -68,20 +67,17 @@ class _EmergencyRegisterTabState extends State<EmergencyRegisterTab> {
   void _onApplyFilter(BuildContext context) {
     final bloc = context.read<EmergancyCommCubit>();
     final param = AvarSearchParam(
-      name: _nameController.text,
       policyNumber: _policyNumberController.text,
     );
     bloc.getAvarSearch(param: param);
   }
 
   void _resetFilters() {
-    _nameController.clear();
     _policyNumberController.clear();
   }
 
   List<Widget> _buildFilterWidgets() {
     return [
-      CustomSearchBar(controller: _nameController, hintText: 'Поиск по ФИО'),
       CustomSearchBar(controller: _policyNumberController, hintText: 'Поиск по номеру полиса'),
     ];
   }

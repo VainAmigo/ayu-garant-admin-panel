@@ -38,4 +38,18 @@ final class RepositoryImpl implements Repository {
     // final data = await dataSource.getAvar(param);
     return data.map((e) => e.toEntity()).toList();
   }
+
+  @override
+  Future<List<AvarSearchEntity>> getDraftedAvar(AvarSearchParam param) async {
+    final data = await const MocDataSource().getDraftedAvar(param);
+    // final data = await dataSource.getDraftedAvar(param);
+    return data.map((e) => e.toEntity()).toList();
+  }
+
+  @override
+  Future<List<AvarSearchEntity>> getApprovedAvar(AvarSearchParam param) async {
+    final data = await const MocDataSource().getApprovedAvar(param);
+    // final data = await dataSource.getApprovedAvar(param);
+    return data.map((e) => e.toEntity()).toList();
+  }
 }

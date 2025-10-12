@@ -25,4 +25,32 @@ class EmergancyCommCubit extends Cubit<EmergancyCommState> {
       emit(EmergancyCommError(e.toString()));
     }
   }
+
+  Future<void> getDraftedAvar({
+    required AvarSearchParam param,
+  }) async {
+    try {
+      if (state is EmergancyCommLoading) return;
+      emit(const EmergancyCommLoading());
+      final data = await repository.getDraftedAvar(param);
+      emit(EmergancyCommLoaded(data));
+    } catch (e, s) {
+      log('EmergancyCommCubit Error: $e\n$s');
+      emit(EmergancyCommError(e.toString()));
+    }
+  }
+
+  Future<void> getApprovedAvar({
+    required AvarSearchParam param,
+  }) async {
+    try {
+      if (state is EmergancyCommLoading) return;
+      emit(const EmergancyCommLoading());
+      final data = await repository.getApprovedAvar(param);
+      emit(EmergancyCommLoaded(data));
+    } catch (e, s) {
+      log('EmergancyCommCubit Error: $e\n$s');
+      emit(EmergancyCommError(e.toString()));
+    }
+  }
 }

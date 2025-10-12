@@ -65,4 +65,36 @@ final class RemoteDataSource implements DataSource {
           .toList(),
     );
   }
+
+  @override
+  Future<List<AvarSearchResponse>> getDraftedAvar(AvarSearchParam param) async {
+    final response = await client.post<List<dynamic>>(
+      '/avar/drafted',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold(
+      (l) => throw l,
+      (r) => r
+          .map((e) => AvarSearchResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  @override
+  Future<List<AvarSearchResponse>> getApprovedAvar(
+    AvarSearchParam param,
+  ) async {
+    final response = await client.post<List<dynamic>>(
+      '/avar/approved',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold(
+      (l) => throw l,
+      (r) => r
+          .map((e) => AvarSearchResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
 }

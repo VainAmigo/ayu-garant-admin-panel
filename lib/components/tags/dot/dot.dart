@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Dot extends StatelessWidget {
-  const Dot({super.key, required this.color});
+  const Dot({super.key, required this.color, this.size = 20});
 
   final Color color;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,8 @@ class Dot extends StatelessWidget {
         color: color,
         shape: BoxShape.circle,
       ),
-      height: 20,
-      width: 20,
+      height: size ?? 20,
+      width: size ?? 20,
     );
   }
 }
