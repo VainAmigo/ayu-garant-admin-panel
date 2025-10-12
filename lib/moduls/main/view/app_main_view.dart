@@ -10,7 +10,7 @@ class AppMainView extends StatefulWidget {
 }
 
 class _AppMainViewState extends State<AppMainView> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 4;
 
   @override
   Widget build(BuildContext context) {

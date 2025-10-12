@@ -7,6 +7,7 @@ final class RemoteDataSource implements DataSource {
 
   final RemoteClient client;
 
+  // request for analytic page
   @override
   Future<AnalyticResponse> getAnalytic(AnalyticParam param) async {
     final response = await client.post<Map<String, dynamic>>(
@@ -17,6 +18,7 @@ final class RemoteDataSource implements DataSource {
     return response.fold((l) => throw l, AnalyticResponse.fromJson);
   }
 
+  // universal report request
   @override
   Future<List<ReportResponse>> getReport(ReportParam param) async {
     final response = await client.post<List<dynamic>>(
@@ -27,13 +29,12 @@ final class RemoteDataSource implements DataSource {
     return response.fold(
       (l) => throw l,
       (r) => r
-          .map(
-            (e) => ReportResponse.fromJson(e as Map<String, dynamic>),
-          )
+          .map((e) => ReportResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
-  
+
+  // request for users page
   @override
   Future<List<UsersReportResponse>> getUsers(UsersReportParam param) async {
     final response = await client.post<List<dynamic>>(
@@ -43,10 +44,25 @@ final class RemoteDataSource implements DataSource {
 
     return response.fold(
       (l) => throw l,
-      (r) => r.map(
-        (e) => UsersReportResponse.fromJson(e as Map<String, dynamic>),
-      )
-      .toList(),
+      (r) => r
+          .map((e) => UsersReportResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  // universal request for avar page
+  @override
+  Future<List<AvarSearchResponse>> getAvarSearch(AvarSearchParam param) async {
+    final response = await client.post<List<dynamic>>(
+      '/avar/search',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold(
+      (l) => throw l,
+      (r) => r
+          .map((e) => AvarSearchResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }

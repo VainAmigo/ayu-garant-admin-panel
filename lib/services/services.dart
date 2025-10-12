@@ -4,6 +4,8 @@ export 'entities/report_entity.dart';
 export 'models/report_response.dart';
 export 'entities/users_report_entity.dart';
 export 'models/users_report_response.dart';
+export 'entities/avar_search_entity.dart';
+export 'models/avar_serach_response.dart';
 
 export 'storage/storage.dart';
 export 'repository/repository.dart';

@@ -4,4 +4,5 @@ abstract interface class DataSource {
   Future<AnalyticResponse> getAnalytic(AnalyticParam param);
   Future<List<ReportResponse>> getReport(ReportParam param);
   Future<List<UsersReportResponse>> getUsers(UsersReportParam param);
+  Future<List<AvarSearchResponse>> getAvarSearch(AvarSearchParam param);
 }

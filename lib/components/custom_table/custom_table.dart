@@ -32,6 +32,7 @@ class CustomTable<T> extends StatelessWidget {
   final bool enableHorizontalScroll;
   final double? minWidth;
   final Function()? onExport;
+  final Function(int index)? onTap;
 
   const CustomTable({
     super.key,
@@ -48,6 +49,7 @@ class CustomTable<T> extends StatelessWidget {
     this.enableHorizontalScroll = true,
     this.minWidth,
     this.onExport,
+    this.onTap,
   });
 
   @override
@@ -66,10 +68,13 @@ class CustomTable<T> extends StatelessWidget {
         controller: scrollController,
         thumbVisibility: true,
         trackVisibility: true,
-        child: SingleChildScrollView(
-          controller: scrollController,
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(width: calculatedMinWidth, child: tableWidget),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(width: calculatedMinWidth, child: tableWidget),
+          ),
         ),
       );
     }
@@ -159,27 +164,30 @@ class CustomTable<T> extends StatelessWidget {
               color: isEven
                   ? (alternateRowBackgroundColor ?? AppColors.white)
                   : (rowBackgroundColor ?? AppColors.grey100),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: AppSpacing.defaultPadding,
-                children: columns.map((column) {
-                  return Expanded(
-                    flex: column.width != null ? 0 : 1,
-                    child: SizedBox(
-                      width: column.width,
-                      child: column.customBuilder != null
-                          ? column.customBuilder!(item)
-                          : Text(
-                              column.dataExtractor(item),
-                              style: AppTypography.grey14w500.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+              child: InkWell(
+                onTap: onTap != null ? () => onTap!(index) : null,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: AppSpacing.defaultPadding,
+                  children: columns.map((column) {
+                    return Expanded(
+                      flex: column.width != null ? 0 : 1,
+                      child: SizedBox(
+                        width: column.width,
+                        child: column.customBuilder != null
+                            ? column.customBuilder!(item)
+                            : Text(
+                                column.dataExtractor(item),
+                                style: AppTypography.grey14w500.copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.left,
-                            ),
-                    ),
-                  );
-                }).toList(),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             if (index < data.length - 1)
@@ -196,11 +204,12 @@ class CustomTable<T> extends StatelessWidget {
         'Найденные записи: ${data.length}',
         style: AppTypography.black20w400,
       ),
-      PrimaryButton(
-        text: 'Экспортировать в Excel',
-        onPressed: onExport ?? () {},
-        icon: Icons.download,
-      ),
+      if (onExport != null)
+        PrimaryButton(
+          text: 'Экспортировать в Excel',
+          onPressed: onExport ?? () {},
+          icon: Icons.download,
+        ),
     ];
   }
 

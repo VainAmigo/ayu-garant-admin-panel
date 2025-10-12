@@ -3,6 +3,12 @@ import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class AppTypography {
+  static const black16w600 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.black,
+  );
+
   static const black20w400 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -13,6 +19,18 @@ class AppTypography {
     fontSize: 32,
     fontWeight: FontWeight.w600,
     color: AppColors.black,
+  );
+
+  static const white32w600 = TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
+
+  static const white24w600 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
   );
 
   static const grey16w500 = TextStyle(

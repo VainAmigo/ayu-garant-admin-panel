@@ -50,6 +50,11 @@ class MyApp extends StatelessWidget {
             context.read<Repository>()
           ),
         ),
+        BlocProvider(
+          create: (context) => EmergancyCommCubit(
+            context.read<Repository>()
+          ),
+        ),
       ],
       child: const AdminPanel(),
     );

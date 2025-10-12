@@ -50,6 +50,16 @@ class _DateRangePickerChipState extends State<DateRangePickerChip> {
     _end = widget.initialEnd;
   }
 
+  @override
+  void didUpdateWidget(DateRangePickerChip oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialStart != oldWidget.initialStart || 
+        widget.initialEnd != oldWidget.initialEnd) {
+      _start = widget.initialStart;
+      _end = widget.initialEnd;
+    }
+  }
+
   Future<void> _pickRange() async {
     final DateTime firstDate = widget.firstDate ?? DateTime(2000);
     final DateTime lastDate = widget.lastDate ?? DateTime(2100);

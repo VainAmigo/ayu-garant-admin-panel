@@ -113,6 +113,12 @@ class _AccountingReportViewState extends State<AccountingReportView> {
         initialStart: _startDate,
         initialEnd: _endDate,
         onChanged: _onDateRangeChanged,
+        onReset: () {
+          setState(() {
+            _startDate = null;
+            _endDate = null;
+          });
+        },
         hintStart: 'Дата начала',
         hintEnd: 'Дата окончания',
       ),

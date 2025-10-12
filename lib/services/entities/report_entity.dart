@@ -50,6 +50,10 @@ final class ReportEntity {
   final String? carModel;
   final String? carBrand;
   final String? carNumber;
+
+  bool get isActive {
+    return policyStatus == PolicyStatus.active;
+  }
 }
 
 @immutable

@@ -56,6 +56,7 @@ final class PolicyTypesEntity {
   final int dsago;
 }
 
+@immutable
 final class AnalyticParam {
   const AnalyticParam({
     this.platformType,

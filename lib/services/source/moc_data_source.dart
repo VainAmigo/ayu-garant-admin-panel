@@ -237,4 +237,37 @@ final class MocDataSource implements DataSource {
     await Future.delayed(const Duration(seconds: 1));
     return data.map((json) => UsersReportResponse.fromJson(json)).toList();
   }
+
+  @override
+  Future<List<AvarSearchResponse>> getAvarSearch(AvarSearchParam param) async {
+    final data = [
+      {
+        'registrationId': '1',
+        'holderName': 'Айдар Абдыраимов',
+        'holderPin': 20101200150250,
+        'culpritName': 'Айнура Кыдырбекова',
+        'culpritPin': 20101200150250,
+        'availableDriversPins': [20101200150250, 21223199301000],
+        'availableDrivers': 'UPTOFOUR',
+        'policyNumber': 'AGIMP0001234',
+        'policyStartDate': '2024-01-15T10:30:00Z',
+        'policyEndDate': '2025-01-15T10:30:00Z',
+        'carModel': 'Toyota Camry',
+        'carBrand': 'Toyota',
+        'carNumber': '01KG320AQY',
+        'vinNumber': 'JN1AZ4EH4EM123456',
+        'vidNumber': '234FF-2444545-345-45H4EM123456',
+        'accidentDate': '2024-01-15T10:30:00Z',
+        'registrationDate': '2024-01-15T10:30:00Z',
+        'paymentDate': '2024-01-15T10:30:00Z',
+        'accidentCost': 100000.0,
+        'paymentAmount': 80000.0,
+        'avarStatus': 'NEUTRAL',
+        'policyStatus': 'ACTIVE',
+      },
+    ];
+
+    await Future.delayed(const Duration(seconds: 1));
+    return data.map((json) => AvarSearchResponse.fromJson(json)).toList();
+  }
 }

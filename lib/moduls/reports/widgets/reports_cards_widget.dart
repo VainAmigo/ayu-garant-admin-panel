@@ -1,6 +1,6 @@
 import 'package:ayu_admin_panel/components/components.dart';
 import 'package:ayu_admin_panel/config/config.dart';
-import 'package:ayu_admin_panel/moduls/reports/view/reports_view.dart';
+import 'package:ayu_admin_panel/moduls/moduls.dart';
 import 'package:ayu_admin_panel/themes/themes.dart';
 import 'package:flutter/material.dart';
 

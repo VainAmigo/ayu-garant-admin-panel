@@ -12,4 +12,5 @@ class TableConfig {
   static const double idWidth = 50.0;
   static const double statusWidth = 100.0;
   static const double actionsWidth = 350.0;
+  static const double carNumberWidth = 80.0;
 }

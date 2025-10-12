@@ -1,1 +1,10 @@
 export 'view/emergency_commissioner_view.dart';
+export 'widgets/emergancy_comm_tabs_widget.dart';
+export 'widgets/emergancy_tables/emergancy_register_table_widget.dart';
+export 'widgets/emergancy_tables/emergancy_drafted_table_widget.dart';
+export 'widgets/emergancy_tables/emergancy_approved_table_widget.dart';
+export 'widgets/emergancy_details/emergancy_detail_widget.dart';
+export 'cubit/emergancy_comm_cubit.dart';
+export 'view/emergency_comm_tabs/emergancy_register_tab.dart';
+export 'view/emergency_comm_tabs/emmergancy_drafted_tab.dart';
+export 'view/emergency_comm_tabs/emergancy_approved_tab.dart';

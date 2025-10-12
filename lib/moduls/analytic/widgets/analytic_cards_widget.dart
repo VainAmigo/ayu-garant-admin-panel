@@ -25,7 +25,7 @@ class AnlyticCardsGrid extends StatelessWidget {
       ),
       desktop: AnalyticInfoCardGridView(
         analyticData: analyticData,
-        childAspectRatio: size.width < 1400 && size.width > 1300 ? 1.5 : 2,
+        childAspectRatio: size.width < 1400 && size.width > 1300 ? 1.9 : 2.9,
       ),
     );
   }

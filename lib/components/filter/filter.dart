@@ -9,11 +9,13 @@ class Filter extends StatefulWidget {
     this.onFiltersSet,
     this.onFiltersReset,
     this.filtersList,
+    this.filterButtonText,
   });
 
   final void Function()? onFiltersSet;
   final void Function()? onFiltersReset;
   final List<Widget>? filtersList;
+  final String? filterButtonText;
 
   @override
   State<Filter> createState() => _FilterState();
@@ -44,7 +46,7 @@ class _FilterState extends State<Filter> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   PrimaryButton(
-                    text: 'Сформировать',
+                    text: widget.filterButtonText ?? 'Сформировать',
                     onPressed: widget.onFiltersSet,
                   ),
                   TextButton.icon(
