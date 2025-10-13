@@ -54,15 +54,21 @@ class SideMenuWidget extends StatelessWidget {
             ),
             _buildMenuItem(
               context,
+              icon: 'assets/icons/icon_notification.svg',
+              title: 'Уведомления',
+              onTap: () => _selectPage(context, 4),
+            ),
+            _buildMenuItem(
+              context,
               icon: 'assets/icons/icon_avar.svg',
               title: 'Аварийный комиссар',
-              onTap: () => _selectPage(context, 4),
+              onTap: () => _selectPage(context, 5),
             ),
             _buildMenuItem(
               context,
               icon: 'assets/icons/icon_person.svg',
               title: 'Профиль',
-              onTap: () => _selectPage(context, 5),
+              onTap: () => _selectPage(context, 6),
             ),
           ],
         ),

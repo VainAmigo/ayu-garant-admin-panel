@@ -54,7 +54,7 @@ class AnalyticFilterWidget extends StatefulWidget {
 
 class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
   String? _selectedStatus;
-  PeriodFilter _selectedPeriod = PeriodFilter.day;
+  DotPeriod _selectedPeriod = DotPeriod.day;
   DateTime? _startDate;
   DateTime? _endDate;
 
@@ -81,7 +81,9 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
     _endDate = widget.prepareState.endDate;
 
     if (widget.prepareState.dateRange != null) {
-      _selectedPeriod = _getPeriodFromString(widget.prepareState.dateRange!);
+      _selectedPeriod = DotPeriod.values.firstWhere(
+        (period) => period.name == widget.prepareState.dateRange!,
+      );
     }
   }
 
@@ -119,15 +121,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
                 mainAxisSize: MainAxisSize.max,
                 spacing: AppSpacing.defaultPadding,
                 children: [
-                  DotTagFilter(
-                    initialPeriod: _selectedPeriod,
-                    onPeriodChanged: (PeriodFilter period) {
-                      setState(() {
-                        _selectedPeriod = period;
-                      });
-                      _debouncedUpdateFilterData();
-                    },
-                  ),
+                  DotPeriodPicker(onPeriodSelected: _onPeriodSelected),
                   CustomDropDown<String>(
                     value: _selectedStatus,
                     onChanged: (value) {
@@ -154,19 +148,11 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
                 ],
               )
             : Column(
-                spacing: AppSpacing.defaultPadding, 
+                spacing: AppSpacing.defaultPadding,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  DotTagFilter(
-                    initialPeriod: _selectedPeriod,
-                    onPeriodChanged: (PeriodFilter period) {
-                      setState(() {
-                        _selectedPeriod = period;
-                      });
-                      _debouncedUpdateFilterData();
-                    },
-                  ),
+                  DotPeriodPicker(onPeriodSelected: _onPeriodSelected),
                   CustomDropDown<String>(
                     value: _selectedStatus,
                     onChanged: (value) {
@@ -208,7 +194,7 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
       SetFilterData(
         startDate: _startDate,
         endDate: _endDate,
-        dateRange: _getDateRangeString(_selectedPeriod),
+        dateRange: _selectedPeriod.name,
         policyType: _selectedStatus,
       ),
     );
@@ -222,35 +208,10 @@ class _AnalyticFilterWidgetState extends State<AnalyticFilterWidget> {
     _debouncedUpdateFilterData();
   }
 
-  String _getDateRangeString(PeriodFilter period) {
-    switch (period) {
-      case PeriodFilter.day:
-        return 'day';
-      case PeriodFilter.week:
-        return 'week';
-      case PeriodFilter.month:
-        return 'month';
-      case PeriodFilter.year:
-        return 'year';
-      case PeriodFilter.all:
-        return 'all';
-    }
-  }
-
-  PeriodFilter _getPeriodFromString(String dateRange) {
-    switch (dateRange) {
-      case 'day':
-        return PeriodFilter.day;
-      case 'week':
-        return PeriodFilter.week;
-      case 'month':
-        return PeriodFilter.month;
-      case 'year':
-        return PeriodFilter.year;
-      case 'all':
-        return PeriodFilter.all;
-      default:
-        return PeriodFilter.day;
-    }
+  void _onPeriodSelected(DotPeriod period) {
+    setState(() {
+      _selectedPeriod = period;
+    });
+    _debouncedUpdateFilterData();
   }
 }

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../themes/colors/app_colors.dart';
 
-/// Виджет чипа-пикера диапазона дат в стиле дизайна на макете.
-/// Показывает иконку календаря и два плейсхолдера/даты: "дата начала" и "дата окончания".
-/// По тапу открывает стандартный `showDateRangePicker`.
 class DateRangePickerChip extends StatefulWidget {
   const DateRangePickerChip({
     super.key,

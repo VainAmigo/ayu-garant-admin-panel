@@ -432,4 +432,64 @@ final class MocDataSource implements DataSource {
     await Future.delayed(const Duration(seconds: 1));
     return data.map((json) => AvarSearchResponse.fromJson(json)).toList();
   }
+
+  // Notification methods
+  @override
+  Future<List<NotificationListResponse>> getNotificationList(NotificationListParam param) async {
+    final data = [
+      {
+        'id': '1',
+        'title': 'Новое уведомление',
+        'body': 'Это тестовое уведомление для проверки функциональности',
+        'type': 'SINGLE',
+        'date': '2024-01-15T10:30:00Z',
+        'time': '10:30',
+        'weekday': 'MONDAY',
+        'status': 'ACTIVE',
+      },
+      {
+        'id': '2',
+        'title': 'Еженедельное уведомление',
+        'body': 'Еженедельный отчет о продажах',
+        'type': 'WEEKLY',
+        'date': '2024-01-15T10:30:00Z',
+        'time': '09:00',
+        'weekday': 'MONDAY',
+        'status': 'PAUSED',
+      },
+      {
+        'id': '3',
+        'title': 'Ежемесячное уведомление',
+        'body': 'Ежемесячный отчет о финансовых показателях',
+        'type': 'MONTHLY',
+        'date': '2024-01-01T00:00:00Z',
+        'time': '08:00',
+        'weekday': 'MONDAY',
+        'status': 'PAUSED',
+      },
+    ];
+
+    await Future.delayed(const Duration(seconds: 1));
+    return data.map((json) => NotificationListResponse.fromJson(json)).toList();
+  }
+
+  @override
+  Future<AddNotificationResponse> addNotification(AddNotificationParam param) async {
+    await Future.delayed(const Duration(seconds: 1));
+    
+    return const AddNotificationResponse(
+      message: 'Уведомление успешно добавлено',
+      success: true,
+    );
+  }
+
+  @override
+  Future<NotificationControlResponse> controlNotification(NotificationControlParam param) async {
+    await Future.delayed(const Duration(seconds: 1));
+    
+    return const NotificationControlResponse(
+      message: 'Статус уведомления успешно изменен',
+      success: true,
+    );
+  }
 }

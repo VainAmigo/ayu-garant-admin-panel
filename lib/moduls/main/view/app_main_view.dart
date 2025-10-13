@@ -52,8 +52,10 @@ Widget _buildCurrentPage(int selectedIndex) {
     case 3:
       return AccountingView();
     case 4:
-      return EmergencyCommissionerView();
+      return NotificationView();
     case 5:
+      return EmergencyCommissionerView();
+    case 6:
       return ProfileView();
     default:
       return AnalyticView();

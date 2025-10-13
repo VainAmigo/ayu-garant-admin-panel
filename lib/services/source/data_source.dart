@@ -7,4 +7,9 @@ abstract interface class DataSource {
   Future<List<AvarSearchResponse>> getAvarSearch(AvarSearchParam param);
   Future<List<AvarSearchResponse>> getDraftedAvar(AvarSearchParam param);
   Future<List<AvarSearchResponse>> getApprovedAvar(AvarSearchParam param);
+  
+  // Notification methods
+  Future<List<NotificationListResponse>> getNotificationList(NotificationListParam param);
+  Future<AddNotificationResponse> addNotification(AddNotificationParam param);
+  Future<NotificationControlResponse> controlNotification(NotificationControlParam param);
 }

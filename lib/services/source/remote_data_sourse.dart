@@ -97,4 +97,40 @@ final class RemoteDataSource implements DataSource {
           .toList(),
     );
   }
+
+  // Notification methods
+  @override
+  Future<List<NotificationListResponse>> getNotificationList(NotificationListParam param) async {
+    final response = await client.post<List<dynamic>>(
+      '/notifications/list',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold(
+      (l) => throw l,
+      (r) => r
+          .map((e) => NotificationListResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  @override
+  Future<AddNotificationResponse> addNotification(AddNotificationParam param) async {
+    final response = await client.post<Map<String, dynamic>>(
+      '/notifications/add',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold((l) => throw l, AddNotificationResponse.fromJson);
+  }
+
+  @override
+  Future<NotificationControlResponse> controlNotification(NotificationControlParam param) async {
+    final response = await client.post<Map<String, dynamic>>(
+      '/notifications/control',
+      body: param.toBody().toJson(),
+    );
+
+    return response.fold((l) => throw l, NotificationControlResponse.fromJson);
+  }
 }

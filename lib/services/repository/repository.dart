@@ -7,4 +7,9 @@ abstract class Repository {
   Future<List<AvarSearchEntity>> getAvarSearch(AvarSearchParam param);
   Future<List<AvarSearchEntity>> getDraftedAvar(AvarSearchParam param);
   Future<List<AvarSearchEntity>> getApprovedAvar(AvarSearchParam param);
+  
+  // Notification methods
+  Future<List<NotificationListEntity>> getNotificationList(NotificationListParam param);
+  Future<AddNotificationEntity> addNotification(AddNotificationParam param);
+  Future<NotificationControlEntity> controlNotification(NotificationControlParam param);
 }

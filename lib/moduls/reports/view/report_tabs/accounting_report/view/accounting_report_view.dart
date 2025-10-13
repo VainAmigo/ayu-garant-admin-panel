@@ -18,10 +18,10 @@ class _AccountingReportViewState extends State<AccountingReportView> {
   String? _selectedPolicyType;
   DateTime? _startDate;
   DateTime? _endDate;
-  PeriodFilter _selectedPeriod = PeriodFilter.day;
+  DotPeriod _selectedPeriod = DotPeriod.day;
   String? _selectedPaymentSystem;
 
-  final ReportParam _defaultParams = ReportParam(dateRange: PeriodFilter.day.name);
+  final ReportParam _defaultParams = ReportParam(dateRange: DotPeriod.day.name);
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _AccountingReportViewState extends State<AccountingReportView> {
       _selectedPolicyType = null;
       _startDate = null;
       _endDate = null;
-      _selectedPeriod = PeriodFilter.day;
+      _selectedPeriod = DotPeriod.day;
     });
   }
 
@@ -89,6 +89,12 @@ class _AccountingReportViewState extends State<AccountingReportView> {
     });
   }
 
+  void _onPeriodSelected(DotPeriod period) {
+    setState(() {
+      _selectedPeriod = period;
+    });
+  }
+
   final List<DropdownItem<String>> _paymentSystemItems = [
     DropdownItem(value: 'all', label: 'Все'),
     DropdownItem(value: 'Finik', label: 'Финик'),
@@ -97,14 +103,7 @@ class _AccountingReportViewState extends State<AccountingReportView> {
 
   List<Widget> _buildFilterWidgets() {
     return [
-      DotTagFilter(
-        initialPeriod: _selectedPeriod,
-        onPeriodChanged: (PeriodFilter period) {
-          setState(() {
-            _selectedPeriod = period;
-          });
-        },
-      ),
+      DotPeriodPicker(onPeriodSelected: _onPeriodSelected),
       CustomDropDown<String>(
         value: _selectedPolicyType,
         onChanged: _onPolicyTypeChanged,

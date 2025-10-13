@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool enabled;
   final int? maxLines;
+  final double? width;
 
   const CustomTextField({
     super.key,
@@ -18,12 +19,13 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.enabled = true,
     this.maxLines = 1,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
+      width: width ?? 150,
       child: TextField(
         controller: controller,
         obscureText: obscureText,

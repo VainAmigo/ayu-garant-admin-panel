@@ -5,3 +5,4 @@ export 'accounting/accounting.dart';
 export 'users/users.dart';
 export 'emergency_commissioner/emergency_commissioner.dart';
 export 'profile/profile.dart';
+export 'notification/notification.dart';

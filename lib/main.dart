@@ -55,6 +55,11 @@ class MyApp extends StatelessWidget {
             context.read<Repository>()
           ),
         ),
+        BlocProvider(
+          create: (context) => NotificationCubit(
+            context.read<Repository>()
+          ),
+        ),
       ],
       child: const AdminPanel(),
     );
@@ -69,6 +74,10 @@ class AdminPanel extends StatelessWidget {
     return MaterialApp(
       title: 'AYU Admin Panel',
       debugShowCheckedModeBanner: false,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: child!,
+      ),
       // initialRoute: AppRouter.main,
       theme: const AppTheme().themeData,
       home: AppMainView(),

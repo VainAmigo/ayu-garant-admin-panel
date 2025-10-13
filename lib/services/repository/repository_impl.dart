@@ -52,4 +52,26 @@ final class RepositoryImpl implements Repository {
     // final data = await dataSource.getApprovedAvar(param);
     return data.map((e) => e.toEntity()).toList();
   }
+
+  // Notification methods
+  @override
+  Future<List<NotificationListEntity>> getNotificationList(NotificationListParam param) async {
+    final data = await const MocDataSource().getNotificationList(param);
+    // final data = await dataSource.getNotificationList(param);
+    return data.map((e) => e.toEntity()).toList();
+  }
+
+  @override
+  Future<AddNotificationEntity> addNotification(AddNotificationParam param) async {
+    final data = await const MocDataSource().addNotification(param);
+    // final data = await dataSource.addNotification(param);
+    return data.toEntity();
+  }
+
+  @override
+  Future<NotificationControlEntity> controlNotification(NotificationControlParam param) async {
+    final data = await const MocDataSource().controlNotification(param);
+    // final data = await dataSource.controlNotification(param);
+    return data.toEntity();
+  }
 }

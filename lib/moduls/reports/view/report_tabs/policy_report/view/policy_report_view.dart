@@ -15,7 +15,7 @@ class PolicyReportView extends StatefulWidget {
 }
 
 class _PolicyReportViewState extends State<PolicyReportView> {
-  final ReportParam _defaultParams = ReportParam(dateRange: PeriodFilter.day.name);
+  final ReportParam _defaultParams = ReportParam(dateRange: DotPeriod.day.name);
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
   String? _selectedPolicyType;
   DateTime? _startDate;
   DateTime? _endDate;
-  PeriodFilter _selectedPeriod = PeriodFilter.day;
+  DotPeriod _selectedPeriod = DotPeriod.day;
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +87,15 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     });
   }
 
+  void _onPeriodSelected(DotPeriod period) {
+    setState(() {
+      _selectedPeriod = period;
+    });
+  }
+
   List<Widget> _buildFilterWidgets() {
     return [
-      DotTagFilter(
-        initialPeriod: _selectedPeriod,
-        onPeriodChanged: (PeriodFilter period) {
-          setState(() {
-            _selectedPeriod = period;
-          });
-        },
-      ),
+      DotPeriodPicker(onPeriodSelected: _onPeriodSelected),
       CustomDropDown<String>(
         value: _selectedPolicyType,
         onChanged: _onPolicyTypeChanged,
@@ -124,7 +123,7 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     DateTime? startDate,
     DateTime? endDate,
     String? policyType,
-    PeriodFilter? period,
+    DotPeriod? period,
   ) {
     final ReportParam filters = ReportParam(
       startDate: startDate,
@@ -134,18 +133,11 @@ class _PolicyReportViewState extends State<PolicyReportView> {
     );
     final bloc = context.read<ReportCubit>();
 
-    final param = ReportParam(
-      startDate: filters.startDate,
-      endDate: filters.endDate,
-      policyType: filters.policyType,
-      dateRange: filters.dateRange,
-    );
-
     log('param: $startDate');
     log('param: $endDate');
     log('param: $policyType');
-    log('param: $period');
+    log('param: ${period?.name}');
 
-    bloc.getReport(param: param);
+    bloc.getReport(param: filters);
   }
 }
