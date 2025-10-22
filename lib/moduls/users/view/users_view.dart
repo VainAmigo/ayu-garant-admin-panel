@@ -83,9 +83,11 @@ class _UsersViewState extends State<UsersView> {
   void _onExport() {}
 
   void _resetFilters() {
-    _nameController.clear();
-    _phoneController.clear();
-    _selectedRole = null;
+    setState(() {
+      _nameController.clear();
+      _phoneController.clear();
+      _selectedRole = null;
+    });
   }
 
   List<Widget> _buildFilterWidgets() {
@@ -121,7 +123,7 @@ class _UsersViewState extends State<UsersView> {
   void _onDelete() {
     log('onDelete');
   }
-  
+
   void _onManageRoles() {
     log('onManageRoles');
   }

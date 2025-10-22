@@ -97,10 +97,12 @@ class _EmergencyApprovedTabState extends State<EmergencyApprovedTab> {
   }
 
   void _resetFilters() {
-    _registrationIdController.clear();
-    _policyNumberController.clear();
-    _accidentDate = null;
-    _paymentDate = null;
+    setState(() {
+      _registrationIdController.clear();
+      _policyNumberController.clear();
+      _accidentDate = null;
+      _paymentDate = null;
+    });
   }
 
   List<Widget> _buildFilterWidgets() {

@@ -25,32 +25,22 @@ class NotificationCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppSpacing.defaultPadding,
-          children: [_buildActionTitle(), _buildBottomRow()]),
+          children: [_buildActionTitle(), _buildBottomRow()],
+        ),
       ),
     );
   }
 
   Widget _buildBottomRow() {
-    return Row(
-      spacing: 20,
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
+      spacing: 5,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 55,
-          height: 55,
-          decoration: BoxDecoration(
-            color: AppColors.grey100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(Icons.notifications, color: AppColors.primary),
-        ),
-        Column(
-          spacing: 5,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(notification.title, style: AppTypography.black20w400), Text(notification.body, style: AppTypography.grey14w500),
-          ],
+        Text(notification.title, style: AppTypography.black20w400),
+        Text(
+          notification.body,
+          style: AppTypography.grey14w500,
         ),
       ],
     );

@@ -34,101 +34,103 @@ class _EmergancyDraftedDetailWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppSpacing.defaultPadding,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Header
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Детали аварии', style: AppTypography.black20w400),
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close, color: AppColors.grey),
-            ),
-          ],
-        ),
-        // Content
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _textTitle('Номер полиса: ', widget.avarSearch.policyNumber ?? ''),
-            _textTitle('ФИО владельца: ', widget.avarSearch.holderName ?? ''),
-            _textTitle(
-              'ПИН владельца: ',
-              widget.avarSearch.holderPin?.toString() ?? '',
-            ),
-            _textTitle(
-              'Период действия: ',
-              '${widget.avarSearch.policyStartDate?.formatted} - ${widget.avarSearch.policyEndDate?.formatted}',
-            ),
-            const Divider(color: AppColors.grey),
-            _textTitle('Гос. номер: ', widget.avarSearch.carNumber ?? ''),
-            _textTitle('Модель автомобиля: ', widget.avarSearch.carModel ?? ''),
-            _textTitle('Марка автомобиля: ', widget.avarSearch.carBrand ?? ''),
-            _textTitle('Вин номер: ', widget.avarSearch.vinNumber ?? ''),
-            _textTitle('VID номер: ', widget.avarSearch.vidNumber ?? ''),
-            const Divider(color: AppColors.grey),
-            _textTitle('Номер РЗНУ: ', widget.avarSearch.registrationId ?? ''),
-            _textTitle(
-              'Дата аварии: ',
-              widget.avarSearch.accidentDate?.formatted ?? '',
-            ),
-            _textTitle(
-              'ПИН виновника: ',
-              widget.avarSearch.culpritPin?.toString() ?? '',
-            ),
-            _textTitle('ФИО виновника:', widget.avarSearch.culpritName ?? ''),
-            const Divider(color: AppColors.grey),
-            _textTitle(
-              'Предварительная сумма',
-              widget.avarSearch.accidentCost?.toString() ?? '',
-            ),
-            const Divider(color: AppColors.grey),
-            _widgetTitle(
-              'Дата выплаты: ',
-              DatePicker(
-                hintText: 'Выберите дату',
-                onDateChanged: (date) {
-                  setState(() {
-                    paymentDate = date;
-                  });
-                  _checkFormValidity();
-                },
-                onReset: () {
-                  setState(() {
-                    paymentDate = null;
-                  });
-                  _checkFormValidity();
-                },
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSpacing.defaultPadding,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Header
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Детали аварии', style: AppTypography.black20w400),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.close, color: AppColors.grey),
               ),
-            ),
-            _widgetTitle(
-              'Сумма к выплате: ',
-              CustomTextField(
-                hintText: 'Введите сумму',
-                controller: paymentAmountController,
+            ],
+          ),
+          // Content
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _textTitle('Номер полиса: ', widget.avarSearch.policyNumber ?? ''),
+              _textTitle('ФИО владельца: ', widget.avarSearch.holderName ?? ''),
+              _textTitle(
+                'ПИН владельца: ',
+                widget.avarSearch.holderPin?.toString() ?? '',
               ),
-            ),
-
-            const SizedBox(height: 50),
-
-            Row(
-              children: [
-                Text('Потдвердить данные', style: AppTypography.grey16w500),
-                const Spacer(),
-                PrimaryButton(
-                  text: 'Отправить',
-                  onPressed: _isFormValid ? _onSend : null,
+              _textTitle(
+                'Период действия: ',
+                '${widget.avarSearch.policyStartDate?.formatted} - ${widget.avarSearch.policyEndDate?.formatted}',
+              ),
+              const Divider(color: AppColors.grey),
+              _textTitle('Гос. номер: ', widget.avarSearch.carNumber ?? ''),
+              _textTitle('Модель автомобиля: ', widget.avarSearch.carModel ?? ''),
+              _textTitle('Марка автомобиля: ', widget.avarSearch.carBrand ?? ''),
+              _textTitle('Вин номер: ', widget.avarSearch.vinNumber ?? ''),
+              _textTitle('VID номер: ', widget.avarSearch.vidNumber ?? ''),
+              const Divider(color: AppColors.grey),
+              _textTitle('Номер РЗНУ: ', widget.avarSearch.registrationId ?? ''),
+              _textTitle(
+                'Дата аварии: ',
+                widget.avarSearch.accidentDate?.formatted ?? '',
+              ),
+              _textTitle(
+                'ПИН виновника: ',
+                widget.avarSearch.culpritPin?.toString() ?? '',
+              ),
+              _textTitle('ФИО виновника:', widget.avarSearch.culpritName ?? ''),
+              const Divider(color: AppColors.grey),
+              _textTitle(
+                'Предварительная сумма',
+                widget.avarSearch.accidentCost?.toString() ?? '',
+              ),
+              const Divider(color: AppColors.grey),
+              _widgetTitle(
+                'Дата выплаты: ',
+                DatePicker(
+                  hintText: 'Выберите дату',
+                  onDateChanged: (date) {
+                    setState(() {
+                      paymentDate = date;
+                    });
+                    _checkFormValidity();
+                  },
+                  onReset: () {
+                    setState(() {
+                      paymentDate = null;
+                    });
+                    _checkFormValidity();
+                  },
                 ),
-              ],
-            ),
-          ],
-        ),
-      ],
+              ),
+              _widgetTitle(
+                'Сумма к выплате: ',
+                CustomTextField(
+                  hintText: 'Введите сумму',
+                  controller: paymentAmountController,
+                ),
+              ),
+      
+              const SizedBox(height: 50),
+      
+              Row(
+                children: [
+                  Text('Потдвердить данные', style: AppTypography.grey16w500),
+                  const Spacer(),
+                  PrimaryButton(
+                    text: 'Отправить',
+                    onPressed: _isFormValid ? _onSend : null,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

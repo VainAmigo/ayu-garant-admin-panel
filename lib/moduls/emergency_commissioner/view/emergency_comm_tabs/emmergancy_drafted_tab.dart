@@ -89,9 +89,11 @@ class _EmergencyDraftedTabState extends State<EmergencyDraftedTab> {
   }
 
   void _resetFilters() {
-    _registrationIdController.clear();
-    _policyNumberController.clear();
-    _accidentDate = null;
+    setState(() {
+      _registrationIdController.clear();
+      _policyNumberController.clear();
+      _accidentDate = null;
+    });
   }
 
   List<Widget> _buildFilterWidgets() {
