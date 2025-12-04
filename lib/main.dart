@@ -1,31 +1,12 @@
-import 'package:ayu_admin_panel/moduls/moduls.dart';
-import 'package:ayu_admin_panel/services/services.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/network/dio_client.dart';
+import 'features/auth/data/repositories/auth_repository.dart';
+import 'features/auth/logic/bloc/auth_bloc.dart';
+import 'features/auth/ui/login_page.dart';
 
-import 'themes/app_theme/app_theme.dart';
-
-void main() async {
-  final storage = await PreferencesStorage.getInstance();
-
-  final remoteClient = RemoteClient(
-    dio: Dio(BaseOptions(baseUrl: 'https://')),
-    token: () => storage.readString(key: 'access_token'),
-    network: NetworkClient(Connectivity()),
-    storage: storage,
-  )..initilize();
-
-  final dataSource = RemoteDataSource(remoteClient);
-  final repository = RepositoryImpl(dataSource);
-
-  runApp(
-    RepositoryProvider<Repository>(
-      create: (context) => repository,
-      child: const MyApp(),
-    ),
-  );
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,54 +14,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    // Dependency Injection
+    final dioClient = DioClient();
+    final authRepository = AuthRepository(dioClient);
+
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AnalyticBloc(
-            context.read<Repository>()
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ReportCubit(
-            context.read<Repository>()
-          ),
-        ),
-        BlocProvider(
-          create: (context) => UsersCubit(
-            context.read<Repository>()
-          ),
-        ),
-        BlocProvider(
-          create: (context) => EmergancyCommCubit(
-            context.read<Repository>()
-          ),
-        ),
-        BlocProvider(
-          create: (context) => NotificationCubit(
-            context.read<Repository>()
-          ),
-        ),
+        RepositoryProvider<AuthRepository>.value(value: authRepository),
       ],
-      child: const AdminPanel(),
-    );
-  }
-}
-
-class AdminPanel extends StatelessWidget {
-  const AdminPanel({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AYU Admin Panel',
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-        child: child!,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(create: (context) => AuthBloc(authRepository)),
+        ],
+        child: MaterialApp(
+          title: 'Admin Panel',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const LoginPage(),
+        ),
       ),
-      // initialRoute: AppRouter.main,
-      theme: const AppTheme().themeData,
-      home: AppMainView(),
     );
   }
 }
